@@ -15,6 +15,7 @@
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/style-min.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/responsive.css'); ?>">
+    <base href="<?= base_url() ?>">
 </head>
 
 <body class="template-index index-demo1">
@@ -127,7 +128,7 @@
                 <div class="row">
                     <!--Logo-->
                     <div class="logo col-5 col-sm-3 col-md-3 col-lg-2 align-self-center">
-                        <a class="logoImg" href="index.html"><img src="assets/images/logo.png" alt="Hema Multipurpose Html Template" title="Hema Multipurpose Html Template" width="149" height="39" /></a>
+                        <a class="logoImg" href="index.html"><img src="<?php echo base_url('assets/images/logo.png'); ?>" alt="Hema Multipurpose Html Template" title="Hema Multipurpose Html Template" width="149" height="39" /></a>
                     </div>
                     <!--End Logo-->
                     <!-- Menu -->
@@ -376,12 +377,12 @@
                             <div id="accountBox">
                                 <div class="customer-links">
                                     <ul class="m-0">
-                                        <li><a href="login.html"><i class="icon anm anm-sign-in-al"></i>Sign In</a></li>
-                                        <li><a href="register.html"><i class="icon anm anm-user-al"></i>Register</a></li>
+                                        <li><a href="login"><i class="icon anm anm-sign-in-al"></i>Sign In</a></li>
+                                        <li><a href="signup"><i class="icon anm anm-user-al"></i>Register</a></li>
                                         <li><a href="my-account.html"><i class="icon anm anm-user-cil"></i>My Account</a></li>
                                         <li><a href="wishlist-style1.html"><i class="icon anm anm-heart-l"></i>Wishlist</a></li>
                                         <li><a href="compare-style1.html"><i class="icon anm anm-random-r"></i>Compare</a></li>
-                                        <li><a href="login.html"><i class="icon anm anm-sign-out-al"></i>Sign out</a></li>
+                                        <li><a href="<?php echo base_url('login/logout'); ?>"><i class="icon anm anm-sign-out-al"></i>Sign out</a></li>
                                     </ul>
                                 </div>
                             </div>

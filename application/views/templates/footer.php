@@ -473,19 +473,27 @@
 </div>
 <!--End Product Quickview Modal-->
 
-<!--Product Promotion Popup-->
+<!-- Product Promotion Popup -->
 <div class="product-notification mobile-hide" id="dismiss">
     <span class="close" aria-hidden="true"><i class="icon anm anm-times-r"></i></span>
     <div class="media d-flex align-items-center">
-        <a href="product-layout1.html" class="mediaImg"><img class="w-100 h-100 blur-up lazyload" src="assets/images/products/product2-120x170.jpg" data-src="assets/images/products/product2-120x170.jpg" alt="Cuff Beanie Cap" width="120" height="170" /></a>
+        <a href="<?php echo base_url('product-layout1.html'); ?>" class="mediaImg">
+            <img src="<?php echo base_url('assets/images/products/product2-120x170.jpg'); ?>" 
+                 data-src="<?php echo base_url('assets/images/products/product2-120x170.jpg'); ?>" 
+                 class="w-100 h-100 blur-up lazyload" 
+                 alt="Cuff Beanie Cap" 
+                 width="120" 
+                 height="170" />
+        </a>
         <div class="media-body ms-3">
-            <p class="smtlt mb-0">Someone purchsed a</p>
-            <h5 class="pname"><a href="product-layout1.html">Cuff Beanie Cap</a></h5>
+            <p class="smtlt mb-0">Someone purchased a</p>
+            <h5 class="pname"><a href="<?php echo base_url('product-layout1.html'); ?>">Cuff Beanie Cap</a></h5>
             <p class="detail">12 Minutes ago from New York, USA</p>
         </div>
     </div>
 </div>
-<!--End Product Promotion Popup-->
+<!-- End Product Promotion Popup -->
+
 
 <!--Newsletter Modal-->
 <div class="newsletter-modal style3 modal fade" id="newsletter_modal" tabindex="-1" aria-hidden="true">
@@ -495,7 +503,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div class="newsletter-wrap d-flex flex-column">
                     <div class="newsltr-img d-none d-sm-none d-md-block">
-                        <img class="rounded-bottom-0 blur-up lazyload" data-src="assets/images/newsletter/newsletter-s6.webp" src="assets/images/newsletter/newsletter-s6.webp" alt="Join Our Newsletter Get 20% OFF First Order" title="Join Our Newsletter Get 20% OFF First Order" width="582" height="202" />
+                        <img class="rounded-bottom-0 blur-up lazyload" data-src="<?php echo base_url('assets/images/newsletter/newsletter-s6.webp'); ?>" src="<?php echo base_url('assets/images/newsletter/newsletter-s6.webp'); ?>" alt="Join Our Newsletter Get 20% OFF First Order" title="Join Our Newsletter Get 20% OFF First Order" width="582" height="202" />
                     </div>
                     <div class="newsltr-text text-center">
                         <div class="wraptext mw-100">
