@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2024 at 02:28 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 7.3.33
+-- Generation Time: Nov 17, 2024 at 03:46 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 7.3.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -116,28 +116,52 @@ INSERT INTO `menus` (`id`, `title`, `url`, `parent_id`, `is_active`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `provinces`
+--
+
+CREATE TABLE `provinces` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `provinces`
+--
+
+INSERT INTO `provinces` (`id`, `name`) VALUES
+(1, 'Banten'),
+(2, 'DKI Jakarta'),
+(3, 'Jawa Barat'),
+(4, 'Jawa Tengah'),
+(5, 'DI Yogyakarta'),
+(6, 'Jawa Timur');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `Alamat` text NOT NULL,
-  `NoTelepon` varchar(50) NOT NULL,
-  `Provinsi` text NOT NULL,
-  `email` varchar(100) NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `full_name` varchar(150) NOT NULL,
+  `address` text NOT NULL,
+  `phone_number` varchar(15) NOT NULL,
+  `province_id` int(11) NOT NULL,
+  `email` varchar(150) NOT NULL,
   `password` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `remember_token` varchar(255) DEFAULT NULL
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `remember_token` varchar(255) DEFAULT NULL,
+  `role` enum('admin','user') NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `Alamat`, `NoTelepon`, `Provinsi`, `email`, `password`, `created_at`, `remember_token`) VALUES
-(1, 'william', '', '', '', 'williamhutubessy@gmail.com', '$2y$10$CgP.sj3sFcB5/FOTHEBBuOF1DLbv0alr0vXMaLqS0si0vmocnewyO', '2024-11-13 06:15:51', '1b6275ec9c65cf17b698be72d600723a'),
-(2, 'admin', '', '', '', 'admin@gmail.com', '$2y$10$N15jyU4WdiLg10EV0as.NOPeNGc0FL6XaTwKQogNhpVt3HsvnKRnC', '2024-11-13 06:21:31', NULL);
+INSERT INTO `users` (`user_id`, `full_name`, `address`, `phone_number`, `province_id`, `email`, `password`, `created_at`, `updated_at`, `remember_token`, `role`) VALUES
+(1, 'William Yohanes Hutubessy', 'Jaksel', '081289536383', 2, 'williamhutubessy@gmail.com', '$2y$10$6vY5CCecz82.fC98o/cQq.ojg7xKmJf7F2Z.sie8WD1MipMpNk5wm', '2024-11-17 14:37:09', '2024-11-17 14:45:47', NULL, 'admin');
 
 --
 -- Indexes for dumped tables
@@ -150,11 +174,18 @@ ALTER TABLE `menus`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `provinces`
+--
+ALTER TABLE `provinces`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD KEY `fk_users_province` (`province_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -167,10 +198,26 @@ ALTER TABLE `menus`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
+-- AUTO_INCREMENT for table `provinces`
+--
+ALTER TABLE `provinces`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `fk_users_province` FOREIGN KEY (`province_id`) REFERENCES `provinces` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

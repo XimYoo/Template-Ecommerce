@@ -15,6 +15,7 @@
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="<?php echo base_url('assets/css/nucleo-svg.css'); ?>" rel="stylesheet" />
   <link id="pagestyle" href="<?php echo base_url('assets/css/soft-ui-dashboard.css?v=1.0.7'); ?>" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="">
@@ -38,25 +39,36 @@
               <div class="card-header text-center pt-4">
                 <h5>Register here</h5>
               </div>
-              <div class="row px-xl-5 px-sm-4 px-3">
-                <!-- Social media icons omitted for brevity -->
-              </div>
-              <div class="mt-2 position-relative text-center">
-                <p class="text-sm font-weight-bold mb-2 text-secondary text-border d-inline z-index-2 bg-white px-3">
-                
-                </p>
-              </div>
               <div class="card-body">
                 <!-- Registration Form -->
-                <form role="form text-left" method="POST" action="<?php echo base_url('register'); ?>">
+                <form role="form text-left" method="POST" action="<?php echo base_url('signup/register'); ?>">
                   <div class="mb-3">
-                    <input type="text" name="name" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="name-addon" required>
+                    <input type="text" name="full_name" class="form-control" placeholder="Full Name" aria-label="Full Name" required>
                   </div>
                   <div class="mb-3">
-                    <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-addon" required>
+                    <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Email" required>
                   </div>
                   <div class="mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon" required>
+                    <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password" required>
+                  </div>
+                  <div class="mb-3">
+                    <textarea name="address" class="form-control" placeholder="Address" aria-label="Address" required></textarea>
+                  </div>
+                  <div class="mb-3">
+                    <input type="text" name="phone_number" class="form-control" placeholder="Phone Number" aria-label="Phone Number" required>
+                  </div>
+                  <div class="mb-3 relative">
+                    <select name="province" class="form-control appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded leading-tight focus:outline-none focus:ring focus:border-blue-500" required>
+                      <option value="" disabled selected>Select Province</option>
+                      <?php foreach ($provinces as $province): ?>
+                        <option value="<?php echo $province['id']; ?>"><?php echo $province['name']; ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                      <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M5.293 9.293a1 1 0 011.414 0L10 12.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                      </svg>
+                    </div>
                   </div>
                   <div class="form-check form-check-info text-left">
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" required>
@@ -76,7 +88,7 @@
       </div>
     </section>
   </main>
-  
+
   <!-- Core JS Files -->
   <script src="<?php echo base_url('assets/js/core/popper.min.js'); ?>"></script>
   <script src="<?php echo base_url('assets/js/core/bootstrap.min.js'); ?>"></script>
