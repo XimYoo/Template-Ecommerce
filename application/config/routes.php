@@ -69,3 +69,4 @@ $route['login'] = 'login/index';
 $route['signin'] = 'login/signin';       
 $route['logout'] = 'login/logout'; 
 $route['shop/gridview'] = 'shop/gridview';
+$route['account'] = 'home/account';

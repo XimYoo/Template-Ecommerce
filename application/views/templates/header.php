@@ -379,7 +379,7 @@
                                     <ul class="m-0">
                                         <li><a href="login"><i class="icon anm anm-sign-in-al"></i>Sign In</a></li>
                                         <li><a href="signup"><i class="icon anm anm-user-al"></i>Register</a></li>
-                                        <li><a href="my-account.html"><i class="icon anm anm-user-cil"></i>My Account</a></li>
+                                        <li><a href="account"><i class="icon anm anm-user-cil"></i>My Account</a></li>
                                         <li><a href="wishlist-style1.html"><i class="icon anm anm-heart-l"></i>Wishlist</a></li>
                                         <li><a href="compare-style1.html"><i class="icon anm anm-random-r"></i>Compare</a></li>
                                         <li><a href="<?php echo base_url('login/logout'); ?>"><i class="icon anm anm-sign-out-al"></i>Sign out</a></li>
