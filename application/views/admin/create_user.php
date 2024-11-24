@@ -1,12 +1,10 @@
 <!-- Sidebar -->
-
 <body class="g-sidenav-show  bg-gray-100">
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" id="sidenav-main">
-        <div class="sidenav-header">
+    <div class="sidenav-header">
             <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
             <a class="navbar-brand m-0" href="<?php echo base_url('admin/dashboard'); ?>">
-                <img src="<?php echo base_url('assets/images/logoapp.png'); ?>" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="ms-1 font-weight-bold">Admin Dashboard</span>
+                <img src="<?php echo base_url('assets/images/logoapp.png'); ?>" class="navbar-brand-img" alt="main_logo" style="height: 60px; width: auto;">
             </a>
         </div>
         <hr class="horizontal dark mt-0">
@@ -286,6 +284,7 @@
                     </div>
                 </form>
             </div>
+        </div>
     </main>
     <!-- Core JS Files -->
     <script src="<?php echo base_url('assets/js/core/popper.min.js'); ?>"></script>

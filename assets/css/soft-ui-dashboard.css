@@ -26728,6 +26728,66 @@ pre[class*="language-"] {
   margin-right: 10px; /* Tambahkan jarak kecil antara avatar dan nama */
 }
 
+form {
+  padding-bottom: 50px; /* Tambahkan padding di bawah form */
+}
+
+/* Hover Effect for Sidebar Menu Items */
+.nav-item a:hover {
+  background-color: #f0f0f0;  /* Light gray background */
+  color: #6f42c1; /* Purple text color */
+}
+
+/* Active state of the menu item */
+.nav-item .nav-link.active {
+  background-color: #6f42c1;  /* Purple background */
+  color: #ffffff;  /* White text */
+}
+
+/* Fix the size of the logo and align the text */
+.sidenav-header .navbar-brand img {
+  height: 40px;  /* Adjust the logo height */
+  width: auto;   /* Maintain aspect ratio */
+}
+
+.sidenav-header .navbar-brand span {
+  font-size: 16px;  /* Adjust the text size */
+  font-weight: bold;  /* Make text bold */
+}
+
+/* Adjust the spacing between the logo and the text */
+.sidenav-header {
+  padding: 10px 0;  /* Adjust top and bottom padding */
+}
+
+/* Flexbox layout for logo and text */
+.sidenav-header {
+  display: flex;            /* Align items horizontally */
+  align-items: center;      /* Vertically center the logo and text */
+  padding: 10px 20px;       /* Add some padding for spacing */
+}
+
+/* Logo image styling */
+.sidenav-header .navbar-brand img {
+  height: 50px;             /* Adjust the logo size */
+  width: auto;              /* Maintain the aspect ratio of the logo */
+  margin-right: 10px;       /* Space between the logo and text */
+}
+
+/* Styling for the text next to the logo */
+.sidenav-header .navbar-brand span {
+  font-size: 16px;          /* Adjust the font size */
+  font-weight: bold;        /* Make text bold */
+  color: #333;              /* Text color */
+}
+
+/* Ensure the link inside the sidenav header uses flex */
+.sidenav-header a {
+  display: flex;
+  align-items: center;      /* Align the text and logo horizontally */
+}
+
+
 
 
 /*# sourceMappingURL=dashboard-free.css.map */

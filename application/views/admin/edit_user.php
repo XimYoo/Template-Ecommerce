@@ -2,11 +2,10 @@
 
 <body class="g-sidenav-show  bg-gray-100">
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" id="sidenav-main">
-        <div class="sidenav-header">
+    <div class="sidenav-header">
             <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
             <a class="navbar-brand m-0" href="<?php echo base_url('admin/dashboard'); ?>">
-                <img src="<?php echo base_url('assets/images/logoapp.png'); ?>" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="ms-1 font-weight-bold">Admin Dashboard</span>
+                <img src="<?php echo base_url('assets/images/logoapp.png'); ?>" class="navbar-brand-img" alt="main_logo" style="height: 60px; width: auto;">
             </a>
         </div>
         <hr class="horizontal dark mt-0">
@@ -172,66 +171,121 @@
             </div>
         </nav>
         <!-- End Navbar -->
-        <div class="container-fluid py-4">
-            <div class="container mt-5">
-                <h2>Edit User</h2>
-                <form role="form text-left" method="POST" action="<?php echo base_url('admin/edit_user/' . $user['user_id']); ?>">
-
-                    <!-- Full Name -->
-                    <div class="mb-3">
-                        <input type="text" name="full_name" class="form-control" placeholder="Full Name" aria-label="Full Name" value="<?php echo $user['full_name']; ?>" required>
+        <div class="container mt-5">
+            <!-- Card container -->
+            <div class="w-full max-w-4xl mx-auto bg-white rounded-xl shadow-sm">
+                <!-- Header bar with navigation -->
+                <div class="flex justify-between items-center p-4 border-b">
+                    <div class="flex items-center gap-3">
+                        <a href="<?php echo base_url('admin/user'); ?>" class="p-2 hover:bg-gray-100 rounded-lg">
+                            <i class="fas fa-arrow-left text-gray-600"></i>
+                        </a>
+                        <div>
+                            <h2 class="text-xl font-semibold text-gray-900">Edit User</h2>
+                            <p class="text-sm text-gray-500">Modify the details of the user</p>
+                        </div>
                     </div>
+                </div>
 
-                    <!-- Email -->
-                    <div class="mb-3">
-                        <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Email" value="<?php echo $user['email']; ?>" required>
+                <!-- Form -->
+                <form role="form" method="POST" action="<?php echo base_url('admin/edit_user/' . $user['user_id']); ?>" class="p-4">
+                    <div class="grid grid-cols-3 gap-4">
+                        <!-- Full Name -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                            <input
+                                type="text"
+                                name="full_name"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                placeholder="Enter full name"
+                                value="<?php echo $user['full_name']; ?>"
+                                required>
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input
+                                type="email"
+                                name="email"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                placeholder="Enter email"
+                                value="<?php echo $user['email']; ?>"
+                                required>
+                        </div>
+
+                        <!-- Password -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                            <input
+                                type="password"
+                                name="password"
+                                class="w-full px-2 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                placeholder="Blank to keep current password">
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                            <input
+                                type="text"
+                                name="phone_number"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                placeholder="Enter phone number"
+                                value="<?php echo $user['phone_number']; ?>"
+                                required>
+                        </div>
+
+                        <!-- Province Dropdown -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Province</label>
+                            <select
+                                name="province"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                required>
+                                <option value="" disabled>Select province</option>
+                                <?php foreach ($provinces as $province): ?>
+                                    <option value="<?php echo $province['id']; ?>" <?php echo ($user['province_id'] == $province['id']) ? 'selected' : ''; ?>>
+                                        <?php echo $province['name']; ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <!-- Role Dropdown -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                            <select
+                                name="role"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                required>
+                                <option value="admin" <?php echo ($user['role'] == 'admin') ? 'selected' : ''; ?>>Admin</option>
+                                <option value="user" <?php echo ($user['role'] == 'user') ? 'selected' : ''; ?>>User</option>
+                            </select>
+                        </div>
+
+                        <!-- Address - spans full width -->
+                        <div class="col-span-3">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                            <textarea
+                                name="address"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                placeholder="Enter address"
+                                rows="2"
+                                required><?php echo $user['address']; ?></textarea>
+                        </div>
                     </div>
-
-                    <!-- Password -->
-                    <div class="mb-3">
-                        <input type="password" name="password" class="form-control" placeholder="Password (Leave blank to keep current password)" aria-label="Password">
-                    </div>
-
-                    <!-- Address -->
-                    <div class="mb-3">
-                        <textarea name="address" class="form-control" placeholder="Address" aria-label="Address" required><?php echo $user['address']; ?></textarea>
-                    </div>
-
-                    <!-- Phone Number -->
-                    <div class="mb-3">
-                        <input type="text" name="phone_number" class="form-control" placeholder="Phone Number" aria-label="Phone Number" value="<?php echo $user['phone_number']; ?>" required>
-                    </div>
-
-                    <!-- Province Dropdown -->
-                    <div class="mb-3 relative">
-                        <label for="province-select" class="text-sm font-medium">Select Province</label>
-                        <select name="province" class="form-control mt-1 px-4 py-2 border border-gray-300 rounded-lg" id="province-select" required>
-                            <option value="" disabled>Select Province</option>
-                            <?php foreach ($provinces as $province): ?>
-                                <option value="<?php echo $province['id']; ?>" <?php echo ($user['province_id'] == $province['id']) ? 'selected' : ''; ?>>
-                                    <?php echo $province['name']; ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-
-                    <!-- Terms and Conditions -->
-                    <div class="form-check form-check-info text-left mb-3">
-                        <input class="form-check-input" type="checkbox" value="" id="terms" required>
-                        <label class="form-check-label" for="terms">
-                            I agree to the <a href="#" class="text-dark font-weight-bolder">Terms and Conditions</a>
-                        </label>
-                    </div>
-
                     <!-- Submit Button -->
-                    <div class="text-center">
-                        <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Update User</button>
+                    <div class="flex justify-end mt-4">
+                        <button type="submit" class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors">
+                            Update User
+                        </button>
                     </div>
-
                 </form>
             </div>
-
         </div>
+
+
     </main>
     <!-- Core JS Files -->
     <script src="<?php echo base_url('assets/js/core/popper.min.js'); ?>"></script>

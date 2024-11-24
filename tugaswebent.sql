@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2024 at 12:50 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 7.3.33
+-- Generation Time: Nov 24, 2024 at 04:08 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 7.3.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -261,7 +261,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `full_name`, `address`, `phone_number`, `province_id`, `email`, `password`, `created_at`, `updated_at`, `remember_token`, `role`, `login_attempts`) VALUES
 (1, 'William Hutubessy', 'Jaksel', '081289536383', 2, 'williamhutubessy@gmail.com', '$2y$10$6vY5CCecz82.fC98o/cQq.ojg7xKmJf7F2Z.sie8WD1MipMpNk5wm', '2024-11-17 14:37:09', '2024-11-24 10:20:24', NULL, 'admin', 0),
-(9, 'John Doe', '123 Main St, Springfield, IL, USA', '081234567890', 3, 'johndoe@gmail.com', '$2y$10$m0KGUZHXkpnjQfKtLI3G0uEwh1kJBsDpQq8vOoCoK3eRoghy0fXRC', '2024-11-23 11:17:04', '2024-11-23 11:17:04', NULL, 'user', 0);
+(9, 'John Doe', '123 Main St, Springfield, IL, USA', '081234567890', 3, 'johndoe@gmail.com', '$2y$10$m0KGUZHXkpnjQfKtLI3G0uEwh1kJBsDpQq8vOoCoK3eRoghy0fXRC', '2024-11-23 11:17:04', '2024-11-24 14:38:04', NULL, 'user', 0),
+(11, 'Jane Smith', '456 Oak St, Bogor, Jawa Barat, Indonesia', '082345678901', 3, 'janesmith@gmail.com', '$2y$10$h7qOTNJvaMQ2VdLbV9FxGepUE3e/cFZAUciqRCeSy1Hn7Z/t1cIlG', '2024-11-24 08:24:01', '2024-11-24 14:24:01', NULL, 'user', 0);
 
 --
 -- Indexes for dumped tables
@@ -360,7 +361,7 @@ ALTER TABLE `provinces`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
