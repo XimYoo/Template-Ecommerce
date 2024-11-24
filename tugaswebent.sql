@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 18, 2024 at 03:27 PM
+-- Generation Time: Nov 24, 2024 at 12:50 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 7.3.33
 
@@ -127,17 +127,17 @@ CREATE TABLE `products` (
   `old_price` decimal(10,2) DEFAULT NULL,
   `image` varchar(255) NOT NULL,
   `sale_label` varchar(50) DEFAULT NULL,
-  `status` enum('active','inactive','sold_out') DEFAULT 'active',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `status_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `description`, `price`, `old_price`, `image`, `sale_label`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Oxford Cuban Shirt', 'A stylish and comfortable shirt made of high-quality cotton.', 99.00, 114.00, 'product1.jpg', 'Sale', 'active', '2024-11-18 14:27:15', '2024-11-18 14:27:15');
+INSERT INTO `products` (`id`, `name`, `description`, `price`, `old_price`, `image`, `sale_label`, `created_at`, `updated_at`, `status_id`) VALUES
+(1, 'Oxford Cuban Shirt', 'A stylish and comfortable shirt made of high-quality cotton.', 99.00, 114.00, 'product1.jpg', 'Sale', '2024-11-18 14:27:15', '2024-11-23 08:11:08', 1);
 
 -- --------------------------------------------------------
 
@@ -161,6 +161,31 @@ CREATE TABLE `product_reviews` (
 INSERT INTO `product_reviews` (`id`, `product_id`, `reviewer_name`, `rating`, `review_text`, `created_at`) VALUES
 (1, 1, 'John Doe', 4, 'Great shirt! Really comfortable and stylish.', '2024-11-18 14:27:37'),
 (2, 1, 'Jane Smith', 5, 'Love this shirt. Fits perfectly and looks amazing.', '2024-11-18 14:27:37');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_statuses`
+--
+
+CREATE TABLE `product_statuses` (
+  `id` int(11) NOT NULL,
+  `status` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_statuses`
+--
+
+INSERT INTO `product_statuses` (`id`, `status`) VALUES
+(1, 'sale'),
+(2, 'new'),
+(3, '50% off'),
+(4, 'hot'),
+(5, 'sold out'),
+(6, 'best seller'),
+(7, 'active'),
+(8, 'inactive');
 
 -- --------------------------------------------------------
 
@@ -219,23 +244,24 @@ CREATE TABLE `users` (
   `user_id` int(10) UNSIGNED NOT NULL,
   `full_name` varchar(150) NOT NULL,
   `address` text NOT NULL,
-  `phone_number` varchar(15) NOT NULL,
+  `phone_number` varchar(12) NOT NULL,
   `province_id` int(11) NOT NULL,
   `email` varchar(150) NOT NULL,
   `password` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `remember_token` varchar(255) DEFAULT NULL,
-  `role` enum('admin','user') NOT NULL DEFAULT 'user'
+  `role` enum('admin','user') NOT NULL DEFAULT 'user',
+  `login_attempts` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `full_name`, `address`, `phone_number`, `province_id`, `email`, `password`, `created_at`, `updated_at`, `remember_token`, `role`) VALUES
-(1, 'William Yohanes Hutubessy', 'Jaksel', '081289536383', 2, 'williamhutubessy@gmail.com', '$2y$10$6vY5CCecz82.fC98o/cQq.ojg7xKmJf7F2Z.sie8WD1MipMpNk5wm', '2024-11-17 14:37:09', '2024-11-17 14:45:47', NULL, 'admin'),
-(3, 'Witarlina Zai', 'Jl. Gatot Subroto No.Kav 52, RT.6/RW.1, Kuningan Bar., Kec. Mampang Prpt., Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta', '081289536383', 2, 'Witarlinazai@gmail.com', '$2y$10$VHuyDmRFQV8./ybJpQA/qe2k3.NH/KwbZ2MnPK22Pt.4Lo0R5M.7K', '2024-11-18 05:49:39', '2024-11-18 05:49:39', NULL, 'user');
+INSERT INTO `users` (`user_id`, `full_name`, `address`, `phone_number`, `province_id`, `email`, `password`, `created_at`, `updated_at`, `remember_token`, `role`, `login_attempts`) VALUES
+(1, 'William Hutubessy', 'Jaksel', '081289536383', 2, 'williamhutubessy@gmail.com', '$2y$10$6vY5CCecz82.fC98o/cQq.ojg7xKmJf7F2Z.sie8WD1MipMpNk5wm', '2024-11-17 14:37:09', '2024-11-24 10:20:24', NULL, 'admin', 0),
+(9, 'John Doe', '123 Main St, Springfield, IL, USA', '081234567890', 3, 'johndoe@gmail.com', '$2y$10$m0KGUZHXkpnjQfKtLI3G0uEwh1kJBsDpQq8vOoCoK3eRoghy0fXRC', '2024-11-23 11:17:04', '2024-11-23 11:17:04', NULL, 'user', 0);
 
 --
 -- Indexes for dumped tables
@@ -245,13 +271,15 @@ INSERT INTO `users` (`user_id`, `full_name`, `address`, `phone_number`, `provinc
 -- Indexes for table `menus`
 --
 ALTER TABLE `menus`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_menu_parent` (`parent_id`);
 
 --
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_product_status` (`status_id`);
 
 --
 -- Indexes for table `product_reviews`
@@ -259,6 +287,12 @@ ALTER TABLE `products`
 ALTER TABLE `product_reviews`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `product_statuses`
+--
+ALTER TABLE `product_statuses`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `product_variants`
@@ -279,7 +313,8 @@ ALTER TABLE `provinces`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `email` (`email`),
-  ADD KEY `fk_users_province` (`province_id`);
+  ADD KEY `fk_users_province` (`province_id`),
+  ADD KEY `idx_role` (`role`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -304,6 +339,12 @@ ALTER TABLE `product_reviews`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `product_statuses`
+--
+ALTER TABLE `product_statuses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `product_variants`
 --
 ALTER TABLE `product_variants`
@@ -319,11 +360,23 @@ ALTER TABLE `provinces`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `menus`
+--
+ALTER TABLE `menus`
+  ADD CONSTRAINT `fk_menu_parent` FOREIGN KEY (`parent_id`) REFERENCES `menus` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `fk_product_status` FOREIGN KEY (`status_id`) REFERENCES `product_statuses` (`id`);
 
 --
 -- Constraints for table `product_reviews`
@@ -341,7 +394,7 @@ ALTER TABLE `product_variants`
 -- Constraints for table `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `fk_users_province` FOREIGN KEY (`province_id`) REFERENCES `provinces` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_province` FOREIGN KEY (`province_id`) REFERENCES `provinces` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -26695,4 +26695,39 @@ pre[class*="language-"] {
   }
 }
 
+/* Custom styles for fixing button alignment in User Table */
+.table td .btn {
+  margin: 0 5px; /* Tambahkan margin horizontal */
+}
+
+.table td .d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px; /* Tambahkan jarak antar tombol */
+}
+
+.table td {
+  padding: 10px;
+  vertical-align: middle; /* Pastikan konten sejajar tengah */
+}
+
+.btn {
+  min-width: 55px; /* Lebar minimum tombol */
+}
+
+.table td {
+  text-align: left; /* Pastikan teks di setiap sel rata kiri */
+}
+
+.table td .d-flex {
+  justify-content: flex-start; /* Pastikan gambar avatar dan nama rata kiri */
+}
+
+.table td img {
+  margin-right: 10px; /* Tambahkan jarak kecil antara avatar dan nama */
+}
+
+
+
 /*# sourceMappingURL=dashboard-free.css.map */

@@ -70,3 +70,7 @@ $route['signin'] = 'login/signin';
 $route['logout'] = 'login/logout'; 
 $route['shop/gridview'] = 'shop/gridview';
 $route['account'] = 'home/account';
+$route['admin/dashboard'] = 'admin/dashboard';
+$route['admin/user'] = 'admin/user';
+$route['admin/product'] = 'admin/product';
+$route['admin/pages'] = 'admin/pages';

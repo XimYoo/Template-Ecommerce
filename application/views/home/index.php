@@ -388,6 +388,7 @@
                     </div>
 
 
+
                     <div class="tab-pane" id="newarrivals" role="tabpanel" aria-labelledby="newarrivals-tab">
                         <!--Product Grid-->
                         <div class="grid-products grid-view-items">

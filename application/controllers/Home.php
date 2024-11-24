@@ -20,6 +20,10 @@ class Home extends CI_Controller {
 
             // Retrieve the average rating for each product
             $product->average_rating = $this->Product_model->get_product_reviews_average($product->id);
+
+            // Add the status label using the public method
+            // Directly call get_status_label() since it's now public
+            $product->status_label = $this->Product_model->get_status_label($product->status);
         }
 
         // Retrieve menus (if needed)
