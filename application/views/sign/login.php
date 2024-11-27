@@ -14,6 +14,10 @@
   <link href="<?php echo base_url('assets/css/nucleo-svg.css'); ?>" rel="stylesheet" />  
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>  
   <link href="<?php echo base_url('assets/css/soft-ui-dashboard.css?v=1.0.7'); ?>" rel="stylesheet" />  
+<!-- CDN alternatif untuk Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
 
   <style>  
     .form-control {  
@@ -135,6 +139,7 @@
                       <label>Password</label>  
                       <div class="mb-3 password-toggle-container">  
                         <input type="password" name="password" class="form-control" id="password" placeholder="Password" aria-label="Password" required>  
+                        <!-- Eye Icon Toggle for Password Visibility -->
                         <i class="fas fa-eye password-toggle" id="togglePassword"></i>  
                       </div>  
 

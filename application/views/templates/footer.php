@@ -550,6 +550,7 @@
         }, 7000);
     });
 </script>
+    
 <!--End Newsletter Modal Cookies-->
 
 </div>

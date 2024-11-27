@@ -275,116 +275,134 @@
                 <div class="tab-content" id="productTabsContent">
                     <div class="tab-pane show active" id="bestsellers" role="tabpanel" aria-labelledby="bestsellers-tab">
 
-                        <!--Product Grid-->
+                        <!-- product -->
                         <div class="grid-products grid-view-items">
                             <div class="row col-row product-options row-cols-xl-4 row-cols-lg-4 row-cols-md-3 row-cols-sm-3 row-cols-2">
+                                <!-- Looping produk -->
                                 <?php foreach ($products as $product): ?>
                                     <div class="item col-item">
                                         <div class="product-box">
-
                                             <!-- Start Product Image -->
                                             <div class="product-image">
-                                                <!-- Product Image -->
-                                                <a href="product-layout1.html" class="product-img rounded-3">
-                                                    <?php if (!empty($product->image)): ?>
-                                                        <img class="blur-up lazyload" src="assets/images/products/<?php echo $product->image; ?>" alt="<?php echo $product->name ?? ''; ?>" title="<?php echo $product->name ?? ''; ?>" width="625" height="808" />
-                                                    <?php else: ?>
-                                                        <img class="blur-up lazyload" src="" alt="No Image" width="625" height="808" />
-                                                    <?php endif; ?>
+                                                <!-- Start Product Image -->
+                                                <a href="product-detail.php?id=<?= $product->id; ?>" class="product-img rounded-3">
+                                                    <img class="blur-up lazyload"
+                                                        src="<?= base_url('assets/images/products/' . $product->image); ?>"
+                                                        alt="<?= $product->name; ?>"
+                                                        title="<?= $product->name; ?>"
+                                                        width="625" height="808" />
                                                 </a>
+                                                <!-- End Product Image -->
 
-                                                <!-- Product label: Sale, New, etc. -->
-                                                <?php if (!empty($product->status_label)): ?>
-                                                    <div class="product-labels">
-                                                        <span class="lbl <?php echo strtolower(str_replace(' ', '-', $product->status_label)); ?>" style="font-size: 16px; font-weight: bold; background-color: red; color: white; padding: 5px 10px; border-radius: 5px;">
-                                                            <?php echo $product->status_label; ?>
-                                                        </span>
+                                                <!-- Hover Image -->
+                                                <?php if ($product->has_hover_image): ?>
+                                                    <img class="hover blur-up lazyload"
+                                                        src="<?= base_url('assets/images/products/' . $product->hover_image); ?>"
+                                                        alt="<?= $product->name; ?>"
+                                                        title="<?= $product->name; ?>"
+                                                        width="625" height="808" />
+                                                <?php endif; ?>
+                                                <!-- End Hover Image -->
+
+                                                <!-- Product label -->
+                                                <?php if (!empty($product->sale_label)): ?>
+                                                    <div class="product-labels"><span class="lbl on-sale"><?= $product->sale_label; ?></span></div>
+                                                <?php endif; ?>
+                                                <!-- End Product label -->
+
+                                                <!-- Countdown Timer Debugging -->
+                                                <?php if (strtolower($product->sale_label) === 'sale' && !empty($product->sale_end_date)): ?>
+                                                    <div class="saleTime" data-countdown="<?= date('Y-m-d H:i:s', strtotime($product->sale_end_date)); ?>">
+                                                        <?= date('Y-m-d H:i:s', strtotime($product->sale_end_date)); ?> <!-- Debugging: Cek tanggal yang ter-render -->
                                                     </div>
                                                 <?php endif; ?>
+                                                <!-- End Countdown Timer -->
 
-                                                <!-- Countdown Timer (optional) -->
-                                                <?php if (!empty($product->status) && $product->status === 'sale'): ?>
-                                                    <div class="saleTime" data-countdown="2025/01/01"></div>
-                                                <?php endif; ?>
-
-                                                <!-- Product Buttons that appear on hover -->
+                                                <!-- Product Button -->
                                                 <div class="button-set style1">
-                                                    <!-- Cart Button -->
-                                                    <a href="#addtocart-modal" class="btn-icon addtocart add-to-cart-modal" data-bs-toggle="modal" data-bs-target="#addtocart_modal">
-                                                        <span class="icon-wrap d-flex-justify-center h-100 w-100" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to Cart">
-                                                            <i class="icon anm anm-cart-l"></i><span class="text">Add to Cart</span>
+                                                    <a href="#quickshop-modal" class="btn-icon addtocart quick-shop-modal" data-bs-toggle="modal" data-bs-target="#quickshop_modal">
+                                                        <span class="icon-wrap d-flex-justify-center h-100 w-100" data-bs-toggle="tooltip" data-bs-placement="left" title="Quick Shop">
+                                                            <i class="icon anm anm-cart-l"></i><span class="text">Quick Shop</span>
                                                         </span>
                                                     </a>
-                                                    <!-- Quick View Button -->
                                                     <a href="#quickview-modal" class="btn-icon quickview quick-view-modal" data-bs-toggle="modal" data-bs-target="#quickview_modal">
                                                         <span class="icon-wrap d-flex-justify-center h-100 w-100" data-bs-toggle="tooltip" data-bs-placement="left" title="Quick View">
                                                             <i class="icon anm anm-search-plus-l"></i><span class="text">Quick View</span>
                                                         </span>
                                                     </a>
-                                                    <!-- Wishlist Button -->
                                                     <a href="wishlist-style2.html" class="btn-icon wishlist" data-bs-toggle="tooltip" data-bs-placement="left" title="Add To Wishlist">
                                                         <i class="icon anm anm-heart-l"></i><span class="text">Add To Wishlist</span>
                                                     </a>
-                                                    <!-- Compare Button -->
                                                     <a href="compare-style2.html" class="btn-icon compare" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to Compare">
                                                         <i class="icon anm anm-random-r"></i><span class="text">Add to Compare</span>
                                                     </a>
                                                 </div>
+                                                <!-- End Product Button -->
                                             </div>
                                             <!-- End Product Image -->
 
-                                            <!-- Product Details -->
+                                            <!-- Start Product Details -->
                                             <div class="product-details">
                                                 <!-- Product Name -->
                                                 <div class="product-name">
-                                                    <a href="product-layout1.html"><?php echo $product->name ?? ''; ?></a>
+                                                    <a href="product-detail.php?id=<?= $product->id; ?>"><?= $product->name; ?></a>
                                                 </div>
+                                                <!-- End Product Name -->
 
                                                 <!-- Product Price -->
                                                 <div class="product-price">
-                                                    <?php if (!empty($product->old_price) && $product->old_price > $product->price): ?>
-                                                        <span class="price old-price">$<?php echo number_format($product->old_price, 2); ?></span>
+                                                    <?php if ($product->discount_percentage > 0): ?>
+                                                        <span class="price old-price">$<?= number_format($product->price, 2); ?></span>
+                                                        <span class="price">$<?= number_format($product->price - ($product->price * $product->discount_percentage / 100), 2); ?></span>
+                                                    <?php else: ?>
+                                                        <span class="price">$<?= number_format($product->price, 2); ?></span>
                                                     <?php endif; ?>
-                                                    <span class="price">$<?php echo number_format($product->price, 2); ?></span>
                                                 </div>
+                                                <!-- End Product Price -->
 
                                                 <!-- Product Review -->
                                                 <div class="product-review">
                                                     <?php
-                                                    $average_rating = $product->average_rating ?? 0;
-                                                    for ($i = 0; $i < 5; $i++) {
-                                                        $star_class = $i < $average_rating ? 'anm-star' : 'anm-star-o';
-                                                        echo "<i class='icon anm $star_class'></i>";
-                                                    }
-                                                    ?>
-                                                    <span class="caption hidden ms-1"><?php echo $product->reviews ?? '0'; ?> Reviews</span>
+                                                    $average_rating = round($product->average_rating);
+                                                    for ($i = 1; $i <= 5; $i++):
+                                                        if ($i <= $average_rating): ?>
+                                                            <i class="icon anm anm-star"></i>
+                                                        <?php else: ?>
+                                                            <i class="icon anm anm-star-o"></i>
+                                                    <?php endif;
+                                                    endfor; ?>
+                                                    <span class="caption hidden ms-1"><?= $product->average_rating > 0 ? $average_rating . ' Reviews' : 'No Reviews'; ?></span>
                                                 </div>
+                                                <!-- End Product Review -->
 
                                                 <!-- Color Variant -->
-                                                <?php if (!empty($product->variants)): ?>
-                                                    <ul class="variants-clr swatches">
+                                                <ul class="variants-clr swatches">
+                                                    <?php if (!empty($product->variants)): ?>
                                                         <?php foreach ($product->variants as $variant): ?>
                                                             <li class="swatch medium radius">
-                                                                <span class="swatchLbl" data-bs-toggle="tooltip" data-bs-placement="top" title="<?php echo $variant['variant_name']; ?>">
-                                                                    <img src="assets/images/products/<?php echo $variant['variant_image']; ?>" alt="product" width="625" height="808" />
+                                                                <span class="swatchLbl" data-bs-toggle="tooltip" data-bs-placement="top" title="<?= $variant->variant_name; ?>">
+                                                                    <img src="<?= base_url('assets/images/products/' . $variant->image); ?>" alt="<?= $variant->variant_name; ?>" width="625" height="808" />
                                                                 </span>
                                                             </li>
                                                         <?php endforeach; ?>
-                                                    </ul>
-                                                <?php endif; ?>
+                                                    <?php endif; ?>
+                                                </ul>
+                                                <!-- End Variant -->
                                             </div>
                                             <!-- End Product Details -->
-
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
+                                <!-- End Loop Produk -->
                             </div>
 
                             <div class="view-collection text-center mt-4 mt-md-5">
                                 <a href="shop-left-sidebar.html" class="btn btn-secondary btn-lg">View Collection</a>
                             </div>
                         </div>
-                        <!--End Product Grid-->
+                        <!-- End Product -->
+
+
                     </div>
 
 

@@ -100,7 +100,7 @@
                   <div class="mb-3 relative">
                     <label for="province-select" class="text-sm font-medium text-gray-900 dark:text-gray-300">Select City</label>
                     <select name="province" class="form-control mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" id="province-select" required>
-                      <option value="" disabled selected>Select City</option>
+                      <option value="" disabled selected>Select Provincy</option>
                       <?php foreach ($provinces as $province): ?>
                         <option value="<?php echo $province['id']; ?>"><?php echo $province['name']; ?></option>
                       <?php endforeach; ?>

@@ -1,0 +1,34 @@
+<style>  
+.product-labels {  
+    position: absolute;  
+    top: 10px;  
+    left: 10px;  
+    z-index: 10;  
+}  
+
+.lbl {  
+    padding: 5px 10px;  
+    color: white;  
+    border-radius: 5px;  
+}  
+
+.lbl.sale {  
+    background-color: red; /* Warna bingkai untuk SALE */  
+}  
+
+.lbl.discount {  
+    background-color: green; /* Warna bingkai untuk DISCOUNT atau NEW */  
+}  
+
+.saleTime {  
+    background-color: rgba(255, 255, 255, 0.8);  
+    padding: 5px;  
+    border-radius: 5px;  
+    position: absolute;  
+    bottom: 10px;  
+    left: 10px;  
+    z-index: 10;  
+    font-size: 14px;  
+} 
+
+</style>

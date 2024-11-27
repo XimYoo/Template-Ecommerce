@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2024 at 04:08 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 7.3.30
+-- Generation Time: Nov 27, 2024 at 07:08 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 7.3.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -124,9 +124,12 @@ CREATE TABLE `products` (
   `name` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
   `price` decimal(10,2) NOT NULL,
-  `old_price` decimal(10,2) DEFAULT NULL,
+  `discount_percentage` int(3) DEFAULT 0,
   `image` varchar(255) NOT NULL,
+  `hover_image` varchar(255) DEFAULT NULL,
+  `stock_quantity` int(11) NOT NULL DEFAULT 0,
   `sale_label` varchar(50) DEFAULT NULL,
+  `sale_end_date` datetime DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `status_id` int(11) DEFAULT NULL
@@ -136,8 +139,9 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `description`, `price`, `old_price`, `image`, `sale_label`, `created_at`, `updated_at`, `status_id`) VALUES
-(1, 'Oxford Cuban Shirt', 'A stylish and comfortable shirt made of high-quality cotton.', 99.00, 114.00, 'product1.jpg', 'Sale', '2024-11-18 14:27:15', '2024-11-23 08:11:08', 1);
+INSERT INTO `products` (`id`, `name`, `description`, `price`, `discount_percentage`, `image`, `hover_image`, `stock_quantity`, `sale_label`, `sale_end_date`, `created_at`, `updated_at`, `status_id`) VALUES
+(1, 'Oxford Cuban Shirt', 'A stylish and comfortable shirt made of high-quality cotton.', 99.00, 20, 'product1.jpg', '', 10, 'Sale', '2024-11-28 12:25:24', '2024-11-18 14:27:15', '2024-11-27 05:25:28', 1),
+(2, 'Flannel Collar Shirt', 'Flannel Collar Shirt with a comfortable and stylish design.', 199.00, 20, 'product3.jpg', 'product3-1.jpg', 100, 'New', NULL, '2024-11-26 16:22:32', '2024-11-27 05:57:48', 7);
 
 -- --------------------------------------------------------
 
@@ -148,19 +152,13 @@ INSERT INTO `products` (`id`, `name`, `description`, `price`, `old_price`, `imag
 CREATE TABLE `product_reviews` (
   `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
   `reviewer_name` varchar(255) NOT NULL,
-  `rating` int(1) NOT NULL,
+  `rating` int(1) UNSIGNED DEFAULT NULL CHECK (`rating` between 1 and 5),
   `review_text` text DEFAULT NULL,
+  `review_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `product_reviews`
---
-
-INSERT INTO `product_reviews` (`id`, `product_id`, `reviewer_name`, `rating`, `review_text`, `created_at`) VALUES
-(1, 1, 'John Doe', 4, 'Great shirt! Really comfortable and stylish.', '2024-11-18 14:27:37'),
-(2, 1, 'Jane Smith', 5, 'Love this shirt. Fits perfectly and looks amazing.', '2024-11-18 14:27:37');
 
 -- --------------------------------------------------------
 
@@ -178,14 +176,14 @@ CREATE TABLE `product_statuses` (
 --
 
 INSERT INTO `product_statuses` (`id`, `status`) VALUES
-(1, 'sale'),
-(2, 'new'),
-(3, '50% off'),
-(4, 'hot'),
-(5, 'sold out'),
-(6, 'best seller'),
-(7, 'active'),
-(8, 'inactive');
+(3, '50% OFF'),
+(7, 'ACTIVE'),
+(6, 'BEST SELLER'),
+(4, 'HOT'),
+(8, 'INACTIVE'),
+(2, 'NEW'),
+(1, 'SALE'),
+(5, 'SOLD OUT');
 
 -- --------------------------------------------------------
 
@@ -198,18 +196,23 @@ CREATE TABLE `product_variants` (
   `product_id` int(11) NOT NULL,
   `variant_name` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `is_active` tinyint(1) DEFAULT 1
+  `is_active` tinyint(1) DEFAULT 1,
+  `variant_price` decimal(10,2) DEFAULT NULL,
+  `variant_discount_percentage` int(3) UNSIGNED DEFAULT NULL CHECK (`variant_discount_percentage` between 0 and 100)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_variants`
 --
 
-INSERT INTO `product_variants` (`id`, `product_id`, `variant_name`, `image`, `is_active`) VALUES
-(1, 1, 'Navy', 'product1.jpg', 1),
-(2, 1, 'Green', 'product1-1.jpg', 1),
-(3, 1, 'Gray', 'product1-2.jpg', 1),
-(4, 1, 'Orange', 'product1-3.jpg', 1);
+INSERT INTO `product_variants` (`id`, `product_id`, `variant_name`, `image`, `is_active`, `variant_price`, `variant_discount_percentage`) VALUES
+(1, 1, 'Navy', 'product1.jpg', 1, NULL, 0),
+(2, 1, 'Green', 'product1-1.jpg', 1, NULL, 0),
+(3, 1, 'Gray', 'product1-2.jpg', 1, NULL, 0),
+(4, 1, 'Orange', 'product1-3.jpg', 1, NULL, 0),
+(5, 2, 'Red', 'product3_red.jpg', 1, 99.00, NULL),
+(6, 2, 'Orange', 'product3_orange.jpg', 1, 99.00, NULL),
+(7, 2, 'Yellow', 'product3_yellow.jpg', 1, 99.00, NULL);
 
 -- --------------------------------------------------------
 
@@ -260,9 +263,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `full_name`, `address`, `phone_number`, `province_id`, `email`, `password`, `created_at`, `updated_at`, `remember_token`, `role`, `login_attempts`) VALUES
-(1, 'William Hutubessy', 'Jaksel', '081289536383', 2, 'williamhutubessy@gmail.com', '$2y$10$6vY5CCecz82.fC98o/cQq.ojg7xKmJf7F2Z.sie8WD1MipMpNk5wm', '2024-11-17 14:37:09', '2024-11-24 10:20:24', NULL, 'admin', 0),
-(9, 'John Doe', '123 Main St, Springfield, IL, USA', '081234567890', 3, 'johndoe@gmail.com', '$2y$10$m0KGUZHXkpnjQfKtLI3G0uEwh1kJBsDpQq8vOoCoK3eRoghy0fXRC', '2024-11-23 11:17:04', '2024-11-24 14:38:04', NULL, 'user', 0),
-(11, 'Jane Smith', '456 Oak St, Bogor, Jawa Barat, Indonesia', '082345678901', 3, 'janesmith@gmail.com', '$2y$10$h7qOTNJvaMQ2VdLbV9FxGepUE3e/cFZAUciqRCeSy1Hn7Z/t1cIlG', '2024-11-24 08:24:01', '2024-11-24 14:24:01', NULL, 'user', 0);
+(1, 'William Hutubessy', 'Jaksel', '081289536383', 2, 'williamhutubessy@gmail.com', '$2y$10$6vY5CCecz82.fC98o/cQq.ojg7xKmJf7F2Z.sie8WD1MipMpNk5wm', '2024-11-17 14:37:09', '2024-11-26 11:02:30', 'f77bb96183fc30f2b3a8090a0a348daf2c466ed1f66d26bfb4703f4b8c956d35', 'admin', 0),
+(9, 'John Doe', '123 Main St, Springfield, IL, USA', '081234567890', 3, 'johndoe@gmail.com', '$2y$10$m0KGUZHXkpnjQfKtLI3G0uEwh1kJBsDpQq8vOoCoK3eRoghy0fXRC', '2024-11-23 11:17:04', '2024-11-26 01:35:18', NULL, 'user', 0),
+(14, 'Jane Smith', '456 Oak St, Bogor, Jawa Barat, Indonesia', '082345678901', 3, 'janesmith@gmail.com', '$2y$10$l2zaatZAQegN.8b9HNl98e09K7HeQna0fmw3mker9pwL3zX44bNJ2', '2024-11-25 09:33:52', '2024-11-25 09:33:52', NULL, 'user', 0);
 
 --
 -- Indexes for dumped tables
@@ -280,27 +283,32 @@ ALTER TABLE `menus`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_product_status` (`status_id`);
+  ADD KEY `fk_product_status` (`status_id`),
+  ADD KEY `idx_status_id` (`status_id`);
 
 --
 -- Indexes for table `product_reviews`
 --
 ALTER TABLE `product_reviews`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `idx_review_date` (`review_date`);
 
 --
 -- Indexes for table `product_statuses`
 --
 ALTER TABLE `product_statuses`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_status` (`status`);
 
 --
 -- Indexes for table `product_variants`
 --
 ALTER TABLE `product_variants`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `idx_is_active` (`is_active`);
 
 --
 -- Indexes for table `provinces`
@@ -331,7 +339,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `product_reviews`
@@ -349,7 +357,7 @@ ALTER TABLE `product_statuses`
 -- AUTO_INCREMENT for table `product_variants`
 --
 ALTER TABLE `product_variants`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `provinces`
@@ -361,7 +369,7 @@ ALTER TABLE `provinces`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables
@@ -383,7 +391,8 @@ ALTER TABLE `products`
 -- Constraints for table `product_reviews`
 --
 ALTER TABLE `product_reviews`
-  ADD CONSTRAINT `product_reviews_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `product_reviews_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_reviews_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `product_variants`

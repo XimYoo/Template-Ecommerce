@@ -310,15 +310,21 @@
 
 
     /*-------------------------------
-     09. Timer Count Down
-     ----------------------------------*/
-    $('[data-countdown]').each(function() {
-        var $this = $(this),
-                finalDate = $(this).data('countdown');
-        $this.countdown(finalDate, function(event) {
-            $this.html(event.strftime('<span class="ht-count days"><span class="count-inner"><span class="time-count">%-D</span> <span class="text">Days</span></span></span> <span class="ht-count hour"><span class="count-inner"><span class="time-count">%-H</span> <span class="text">Hr</span></span></span> <span class="ht-count minutes"><span class="count-inner"><span class="time-count">%M</span> <span class="text">Min</span></span></span> <span class="ht-count second"><span class="count-inner"><span class="time-count">%S</span> <span class="text">Sc</span></span></span>'));
-        });
+  09. Timer Count Down
+  ----------------------------------*/
+ $('[data-countdown]').each(function() {
+    var $this = $(this),
+            finalDate = $(this).data('countdown'); // Mendapatkan nilai data-countdown unik untuk setiap elemen
+    $this.countdown(finalDate, function(event) {
+        $this.html(event.strftime(
+            '<span class="ht-count days"><span class="count-inner"><span class="time-count">%-D</span> <span class="text">Days</span></span></span> ' +
+            '<span class="ht-count hour"><span class="count-inner"><span class="time-count">%-H</span> <span class="text">Hr</span></span></span> ' +
+            '<span class="ht-count minutes"><span class="count-inner"><span class="time-count">%M</span> <span class="text">Min</span></span></span> ' +
+            '<span class="ht-count second"><span class="count-inner"><span class="time-count">%S</span> <span class="text">Sc</span></span></span>'
+        ));
     });
+});
+
 
 
     /*-----------------------------------

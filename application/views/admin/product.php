@@ -34,7 +34,7 @@
 
                 <!-- User Menu -->
                 <li class="nav-item">
-                    <a class="nav-link active" href="<?php echo base_url('admin/user'); ?>">
+                    <a class="nav-link" href="<?php echo base_url('admin/user'); ?>">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/1999/xlink">
                                 <title>customer-support</title>
@@ -57,7 +57,7 @@
 
                 <!-- Product Menu -->
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo base_url('admin/product'); ?>">
+                    <a class="nav-link active" href="<?php echo base_url('admin/product'); ?>">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/1999/xlink">
                                 <title>product</title>
@@ -133,9 +133,9 @@
                     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                         <!-- Admin page breadcrumb without link -->
                         <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Admin</li>
-                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">User</li>
+                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
                     </ol>
-                    <h6 class="font-weight-bolder mb-0"></h6>
+                    <h6 class="font-weight-bolder mb-0">Product</h6>
                 </nav>
 
                 <!-- Navbar Controls -->

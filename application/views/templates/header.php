@@ -15,7 +15,9 @@
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/style-min.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/responsive.css'); ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/custom-styles.css'); ?>">
     <base href="<?= base_url() ?>">
+
 </head>
 
 <body class="template-index index-demo1">
