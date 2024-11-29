@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2024 at 07:16 AM
+-- Generation Time: Nov 29, 2024 at 11:13 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 7.3.33
 
@@ -142,7 +142,7 @@ CREATE TABLE `products` (
 INSERT INTO `products` (`id`, `name`, `description`, `price`, `discount_percentage`, `image`, `hover_image`, `stock_quantity`, `sale_label`, `sale_end_date`, `created_at`, `updated_at`, `status_id`) VALUES
 (1, 'Oxford Cuban Shirt', 'A stylish and comfortable shirt made of high-quality cotton.', 99.00, 20, 'product1.jpg', '', 10, 'Sale', '2024-11-28 12:25:24', '2024-11-18 14:27:15', '2024-11-27 05:25:28', 1),
 (2, 'Flannel Collar Shirt', 'Flannel Collar Shirt with a comfortable and stylish design.', 199.00, 20, 'product3.jpg', 'product3-1.jpg', 100, 'New', NULL, '2024-11-26 16:22:32', '2024-11-27 05:57:48', 7),
-(16, 'High-Waisted Pant', 'Celana Keren', 139.00, 10, 'product7.jpg', 'product7-1.jpg', 10, 'Sale', '2024-11-29 18:18:00', '2024-11-29 00:14:27', '2024-11-29 06:14:27', 2);
+(16, 'High-Waisted Pant', 'Celana Keren', 159.00, 10, 'product7.jpg', 'product7-1.jpg', 10, 'New', NULL, '2024-11-29 00:14:27', '2024-11-29 07:00:32', 2);
 
 -- --------------------------------------------------------
 
@@ -214,8 +214,8 @@ INSERT INTO `product_variants` (`id`, `product_id`, `variant_name`, `image`, `is
 (5, 2, 'Red', 'product3_red.jpg', 1, 99.00, NULL),
 (6, 2, 'Orange', 'product3_orange.jpg', 1, 99.00, NULL),
 (7, 2, 'Yellow', 'product3_yellow.jpg', 1, 99.00, NULL),
-(17, 16, 'Black', 'blue-red.jpg', 1, NULL, NULL),
-(18, 16, 'Maroon', 'blue-red.jpg', 1, NULL, NULL);
+(19, 16, 'Blacks', 'blue-red.jpg', 1, NULL, NULL),
+(20, 16, 'Maroon', 'blue-red.jpg', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -360,7 +360,7 @@ ALTER TABLE `product_statuses`
 -- AUTO_INCREMENT for table `product_variants`
 --
 ALTER TABLE `product_variants`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `provinces`

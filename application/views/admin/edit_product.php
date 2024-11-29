@@ -2,7 +2,7 @@
 
 <body class="g-sidenav-show  bg-gray-100">
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" id="sidenav-main">
-    <div class="sidenav-header">
+        <div class="sidenav-header">
             <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
             <a class="navbar-brand m-0" href="<?php echo base_url('admin/dashboard'); ?>">
                 <img src="<?php echo base_url('assets/images/logoapp.png'); ?>" class="navbar-brand-img" alt="main_logo" style="height: 60px; width: auto;">
@@ -34,7 +34,7 @@
 
                 <!-- User Menu -->
                 <li class="nav-item">
-                    <a class="nav-link active" href="<?php echo base_url('admin/user'); ?>">
+                    <a class="nav-link" href="<?php echo base_url('admin/user'); ?>">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/1999/xlink">
                                 <title>customer-support</title>
@@ -57,7 +57,7 @@
 
                 <!-- Product Menu -->
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo base_url('admin/product'); ?>">
+                    <a class="nav-link active" href="<?php echo base_url('admin/product'); ?>">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/1999/xlink">
                                 <title>product</title>
@@ -133,9 +133,9 @@
                     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                         <!-- Admin page breadcrumb without link -->
                         <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Admin</li>
-                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">User</li>
+                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Product</li>
                     </ol>
-                    <h6 class="font-weight-bolder mb-0">Dashboard</h6>
+                    <h6 class="font-weight-bolder mb-0"></h6>
                 </nav>
 
                 <!-- Navbar Controls -->
@@ -177,137 +177,238 @@
                 <!-- Header bar with navigation -->
                 <div class="flex justify-between items-center p-4 border-b">
                     <div class="flex items-center gap-3">
-                        <a href="<?php echo base_url('admin/user'); ?>" class="p-2 hover:bg-gray-100 rounded-lg">
+                        <a href="<?php echo base_url('admin/product'); ?>" class="p-2 hover:bg-gray-100 rounded-lg">
                             <i class="fas fa-arrow-left text-gray-600"></i>
                         </a>
                         <div>
-                            <h2 class="text-xl font-semibold text-gray-900">Edit User</h2>
-                            <p class="text-sm text-gray-500">Modify the details of the user</p>
+                            <h2 class="text-xl font-semibold text-gray-900">Edit Product</h2>
+                            <p class="text-sm text-gray-500">Modify the details of the Product</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Form -->
-<form role="form" method="POST" action="<?php echo base_url('admin/edit_product/' . $product['product_id']); ?>" class="p-4">
-    <div class="grid grid-cols-3 gap-4">
-        <!-- Product Name -->
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
-            <input
-                type="text"
-                name="name"
-                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
-                placeholder="Enter product name"
-                value="<?php echo $product['name']; ?>"
-                required>
-        </div>
+                <form role="form" method="POST" action="<?php echo base_url('admin/edit_product/' . $product['product_id']); ?>" class="p-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Product Name -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
+                            <input
+                                type="text"
+                                name="name"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                placeholder="Enter product name"
+                                value="<?php echo $product['name']; ?>"
+                                required>
+                        </div>
 
-        <!-- Description -->
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-            <textarea
-                name="description"
-                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
-                placeholder="Enter product description"
-                rows="2"
-                required><?php echo $product['description']; ?></textarea>
-        </div>
+                        <!-- Description -->
+                        <div class="col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                            <textarea
+                                name="description"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                placeholder="Enter product description"
+                                rows="3"
+                                required><?php echo $product['description']; ?></textarea>
+                        </div>
 
-        <!-- Price -->
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Price</label>
-            <input
-                type="text"
-                name="price"
-                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
-                placeholder="Enter product price"
-                value="<?php echo $product['price']; ?>"
-                required>
-        </div>
+                        <!-- Price -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Price</label>
+                            <input
+                                type="text"
+                                name="price"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                placeholder="Enter product price"
+                                value="<?php echo $product['price']; ?>"
+                                required>
+                        </div>
 
-        <!-- Stock Quantity -->
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Stock Quantity</label>
-            <input
-                type="number"
-                name="stock_quantity"
-                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
-                placeholder="Enter stock quantity"
-                value="<?php echo $product['stock_quantity']; ?>"
-                required>
-        </div>
+                        <!-- Discount Percentage -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Discount Percentage</label>
+                            <select
+                                name="discount_percentage"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gray-200">
+                                <option value="" disabled <?php echo (!$product['discount_percentage']) ? 'selected' : ''; ?>>Select discount percentage</option>
+                                <option value="10" <?php echo ($product['discount_percentage'] == 10) ? 'selected' : ''; ?>>10%</option>
+                                <option value="15" <?php echo ($product['discount_percentage'] == 15) ? 'selected' : ''; ?>>15%</option>
+                                <option value="20" <?php echo ($product['discount_percentage'] == 20) ? 'selected' : ''; ?>>20%</option>
+                                <option value="25" <?php echo ($product['discount_percentage'] == 25) ? 'selected' : ''; ?>>25%</option>
+                                <option value="30" <?php echo ($product['discount_percentage'] == 30) ? 'selected' : ''; ?>>30%</option>
+                                <option value="50" <?php echo ($product['discount_percentage'] == 50) ? 'selected' : ''; ?>>50%</option>
+                                <option value="70" <?php echo ($product['discount_percentage'] == 70) ? 'selected' : ''; ?>>70%</option>
+                                <option value="0" <?php echo ($product['discount_percentage'] == 0) ? 'selected' : ''; ?>>0%</option>
+                            </select>
+                        </div>
 
-        <!-- Status Dropdown -->
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-            <select
-                name="status_id"
-                class="w-full px-3 py-2 border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gray-200"
-                required>
-                <option value="" disabled>Select status</option>
-                <?php foreach ($statuses as $status): ?>
-                    <option value="<?php echo $status['id']; ?>" <?php echo ($product['status_id'] == $status['id']) ? 'selected' : ''; ?>>
-                        <?php echo $status['status']; ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
+                        <!-- Image -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Image (e.g., product1.jpg)</label>
+                            <input
+                                type="text"
+                                name="image"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                placeholder="Enter image filename"
+                                value="<?php echo $product['image']; ?>"
+                                required>
+                        </div>
 
-        <!-- Image -->
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Image (e.g., product1.jpg)</label>
-            <input
-                type="text"
-                name="image"
-                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
-                placeholder="Enter image filename"
-                value="<?php echo $product['image']; ?>"
-                required>
-        </div>
+                        <!-- Hover Image -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Hover Image (e.g., product1_hover.jpg)</label>
+                            <input
+                                type="text"
+                                name="hover_image"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                placeholder="Enter hover image filename"
+                                value="<?php echo $product['hover_image']; ?>">
+                        </div>
 
-        <!-- Hover Image -->
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Hover Image (e.g., product1_hover.jpg)</label>
-            <input
-                type="text"
-                name="hover_image"
-                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
-                placeholder="Enter hover image filename"
-                value="<?php echo $product['hover_image']; ?>">
-        </div>
 
-        <!-- Sale Label -->
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Sale Label</label>
-            <select
-                name="sale_label"
-                class="w-full px-3 py-2 border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gray-200">
-                <option value="" disabled>Select Sale Label</option>
-                <option value="Sale" <?php echo ($product['sale_label'] == 'Sale') ? 'selected' : ''; ?>>Sale</option>
-                <option value="New" <?php echo ($product['sale_label'] == 'New') ? 'selected' : ''; ?>>New</option>
-                <option value="Best Seller" <?php echo ($product['sale_label'] == 'Best Seller') ? 'selected' : ''; ?>>Best Seller</option>
-                <option value="50% Off" <?php echo ($product['sale_label'] == '50% Off') ? 'selected' : ''; ?>>50% Off</option>
-            </select>
-        </div>
 
-        <!-- Sale End Date -->
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Sale End Date</label>
-            <input
-                type="datetime-local"
-                name="sale_end_date"
-                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
-                value="<?php echo ($product['sale_end_date']) ? date('Y-m-d\TH:i', strtotime($product['sale_end_date'])) : ''; ?>">
-        </div>
-    </div>
+                        <!-- Variant Section -->
+                        <div id="variant-container">
+                            <?php if (!empty($variants)): ?> <!-- Ensure variants exist -->
+                                <?php foreach ($variants as $variant): ?>
+                                    <div class="variant-group mb-4">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Variant Name</label>
+                                        <input
+                                            type="text"
+                                            name="variant_name[]"
+                                            class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                            placeholder="Enter variant name"
+                                            value="<?php echo $variant['variant_name']; ?>"
+                                            required>
+                                    </div>
 
-    <!-- Submit Button -->
-    <div class="flex justify-end mt-4">
-        <button type="submit" class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors">
-            Update Product
-        </button>
-    </div>
-</form>
+                                    <div class="variant-group mb-4">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Variant Image (e.g., variant1.jpg)</label>
+                                        <input
+                                            type="text"
+                                            name="variant_img[]"
+                                            class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                            placeholder="Enter variant image filename"
+                                            value="<?php echo $variant['image']; ?>"> <!-- Use array syntax for 'image' -->
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <p>No variants available for this product.</p> <!-- Message if no variants -->
+                            <?php endif; ?>
+                        </div>
+
+
+                        <!-- Add Another Variant Button -->
+                        <div class="col-span-2 flex justify-start">
+                            <button type="button" id="add-variant" class="text-blue-500 hover:text-blue-700">
+                                + Add Another Variant
+                            </button>
+                        </div>
+
+                        <!-- Stock Quantity -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Stock Quantity</label>
+                            <input
+                                type="text"
+                                name="stock_quantity"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                placeholder="Enter stock quantity"
+                                value="<?php echo $product['stock_quantity']; ?>"
+                                required>
+                        </div>
+
+                        <!-- Sale Label -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Sale Label</label>
+                            <select
+                                name="sale_label"
+                                id="sale-label-select"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gray-200">
+                                <option value="" disabled <?php echo (!$product['sale_label']) ? 'selected' : ''; ?>>Select Sale Label</option>
+                                <option value="Sale" <?php echo ($product['sale_label'] == 'Sale') ? 'selected' : ''; ?>>Sale</option>
+                                <option value="New" <?php echo ($product['sale_label'] == 'New') ? 'selected' : ''; ?>>New</option>
+                                <option value="Best Seller" <?php echo ($product['sale_label'] == 'Best Seller') ? 'selected' : ''; ?>>Best Seller</option>
+                                <option value="50% Off" <?php echo ($product['sale_label'] == '50% Off') ? 'selected' : ''; ?>>50% Off</option>
+                            </select>
+                        </div>
+
+                        <!-- Sale End Date (Initially hidden) -->
+                        <div id="sale-end-date" style="display: <?php echo ($product['sale_label'] == 'Sale') ? 'block' : 'none'; ?>;">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Sale End Date</label>
+                            <input
+                                type="datetime-local"
+                                name="sale_end_date"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                value="<?php echo ($product['sale_end_date']) ? date('Y-m-d\TH:i', strtotime($product['sale_end_date'])) : ''; ?>">
+                        </div>
+
+                        <!-- Status Dropdown with Search -->
+                        <div class="mb-3 relative">
+                            <label for="status-select" class="text-sm font-medium text-gray-700 mb-1">Select Status</label>
+                            <select name="status_id" id="status-select" class="form-control mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                                <option value="" disabled selected>Select status</option>
+                                <?php foreach ($statuses as $status): ?>
+                                    <option value="<?php echo $status->id; ?>" <?php echo ($product['status_id'] == $status->id) ? 'selected' : ''; ?>>
+                                        <?php echo $status->status; ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex justify-end mt-4">
+                        <button
+                            type="submit"
+                            class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors">
+                            Update Product
+                        </button>
+                    </div>
+                </form>
+
+                <script>
+                    // Ambil elemen Sale Label dan Sale End Date
+                    const saleLabelSelect = document.getElementById('sale-label-select');
+                    const saleEndDateDiv = document.getElementById('sale-end-date');
+
+                    // Fungsi untuk mengecek pilihan Sale Label
+                    saleLabelSelect.addEventListener('change', function() {
+                        if (saleLabelSelect.value === 'Sale') {
+                            saleEndDateDiv.style.display = 'block'; // Menampilkan Sale End Date
+                        } else {
+                            saleEndDateDiv.style.display = 'none'; // Menyembunyikan Sale End Date
+                        }
+                    });
+
+                    // Tambah variant baru
+                    document.getElementById('add-variant').addEventListener('click', function() {
+                        const variantContainer = document.getElementById('variant-container');
+
+                        // Membuat elemen baru untuk variant
+                        const newVariantGroup = document.createElement('div');
+                        newVariantGroup.classList.add('variant-group', 'mb-4');
+
+                        // Variant Name input
+                        newVariantGroup.innerHTML = `
+            <label class="block text-sm font-medium text-gray-700 mb-1">Variant Name</label>
+            <input type="text" name="variant_name[]" class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200" placeholder="Enter variant name" required>
+        `;
+
+                        // Variant Image input
+                        const newVariantImgGroup = document.createElement('div');
+                        newVariantImgGroup.classList.add('variant-group', 'mb-4');
+                        newVariantImgGroup.innerHTML = `
+            <label class="block text-sm font-medium text-gray-700 mb-1">Variant Image (e.g., variant1.jpg)</label>
+            <input type="text" name="variant_img[]" class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200" placeholder="Enter variant image filename">
+        `;
+
+                        // Menambahkan kedua input ke container
+                        variantContainer.appendChild(newVariantGroup);
+                        variantContainer.appendChild(newVariantImgGroup);
+                    });
+                </script>
+
 
             </div>
         </div>

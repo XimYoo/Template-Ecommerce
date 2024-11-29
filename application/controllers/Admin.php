@@ -9,30 +9,30 @@ class Admin extends CI_Controller
         parent::__construct();
         $this->load->model('Admin_model');
 
-        // Load session library to manage session data
+        // Memuat pustaka session untuk mengelola data sesi
         $this->load->library('session');
         $this->load->library('form_validation');
 
-        // Check if the user is logged in and if the role is admin
+        // Mengecek apakah pengguna sudah login dan apakah role-nya adalah admin
         if (!$this->session->userdata('logged_in') || $this->session->userdata('role') !== 'admin') {
-            // Redirect to login if the user is not logged in or not an admin
+            // Arahkan ke halaman login jika pengguna belum login atau bukan admin
             redirect('login');
         }
     }
 
     public function dashboard()
     {
-        // Admin Dashboard page
-        $this->load->view('admin/header');  // Load the header view
-        $this->load->view('admin/dashboard');  // Load the dashboard view
+        // Halaman Dashboard Admin
+        $this->load->view('admin/header');  // Memuat tampilan header
+        $this->load->view('admin/dashboard');  // Memuat tampilan dashboard
     }
 
     public function user()
     {
-        // Ambil data user dari model
+        // Mengambil data pengguna dari model
         $data['users'] = $this->Admin_model->get_users();
 
-        // Load tampilan dengan data user
+        // Memuat tampilan dengan data pengguna
         $this->load->view('admin/header');
         $this->load->view('admin/user', $data);
     }
@@ -40,6 +40,7 @@ class Admin extends CI_Controller
     public function create_user()
     {
         if ($this->input->post()) {
+            // Aturan validasi form untuk pembuatan pengguna
             $this->form_validation->set_rules('full_name', 'Full Name', 'required');
             $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
             $this->form_validation->set_rules('phone_number', 'Phone Number', 'required');
@@ -48,6 +49,7 @@ class Admin extends CI_Controller
             $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
 
             if ($this->form_validation->run()) {
+                // Menyiapkan data pengguna yang akan disimpan
                 $user_data = [
                     'full_name' => $this->input->post('full_name'),
                     'email' => $this->input->post('email'),
@@ -59,6 +61,7 @@ class Admin extends CI_Controller
                     'created_at' => date('Y-m-d H:i:s'),
                 ];
 
+                // Menyimpan data pengguna baru ke database
                 if ($this->Admin_model->insert_user($user_data)) {
                     $this->session->set_flashdata('success', 'User created successfully.');
                 } else {
@@ -66,11 +69,13 @@ class Admin extends CI_Controller
                 }
                 redirect('admin/user');
             } else {
+                // Jika validasi gagal, menampilkan pesan error
                 $this->session->set_flashdata('error', validation_errors());
                 redirect('admin/create_user');
             }
         }
 
+        // Mengambil data provinsi untuk dropdown
         $data['provinces'] = $this->Admin_model->get_provinces();
         $this->load->view('admin/header');
         $this->load->view('admin/create_user', $data);
@@ -78,7 +83,7 @@ class Admin extends CI_Controller
 
     public function edit_user($user_id)
     {
-        // Fetch the existing user data
+        // Mengambil data pengguna yang ada berdasarkan ID
         $data['user'] = $this->Admin_model->get_user_by_id($user_id);
 
         if (!$data['user']) {
@@ -86,26 +91,25 @@ class Admin extends CI_Controller
         }
 
         if ($this->input->post()) {
-            // Form validation rules
+            // Aturan validasi form untuk edit pengguna
             $this->form_validation->set_rules('full_name', 'Full Name', 'required');
             $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
             $this->form_validation->set_rules('phone_number', 'Phone Number', 'required');
             $this->form_validation->set_rules('province', 'Province', 'required');
             $this->form_validation->set_rules('role', 'Role', 'required');
 
-            // Check if form validation passes
             if ($this->form_validation->run()) {
-                // Gather updated user data
+                // Menyiapkan data pengguna yang akan diupdate
                 $user_data = [
                     'full_name' => $this->input->post('full_name'),
                     'email' => $this->input->post('email'),
                     'phone_number' => $this->input->post('phone_number'),
-                    'province_id' => $this->input->post('province'), // Updated field name
+                    'province_id' => $this->input->post('province'),
                     'role' => $this->input->post('role'),
                     'address' => $this->input->post('address'),
                 ];
 
-                // Call the model to update user data
+                // Memanggil model untuk memperbarui data pengguna
                 if ($this->Admin_model->update_user($user_id, $user_data)) {
                     $this->session->set_flashdata('success', 'User updated successfully.');
                 } else {
@@ -115,10 +119,10 @@ class Admin extends CI_Controller
             }
         }
 
-        // Load provinces for the dropdown
+        // Mengambil data provinsi untuk dropdown
         $data['provinces'] = $this->Admin_model->get_provinces();
 
-        // Load the edit user view
+        // Memuat tampilan untuk edit pengguna
         $this->load->view('admin/header');
         $this->load->view('admin/edit_user', $data);
     }
@@ -133,14 +137,14 @@ class Admin extends CI_Controller
         redirect('admin/user');
     }
 
-    // --- Product Management Methods ---
+    // --- Metode untuk Mengelola Produk ---
 
     public function product()
     {
-        // Ambil semua produk dari model
+        // Mengambil semua produk dari model
         $data['products'] = $this->Admin_model->get_all_products();
 
-        // Load tampilan dengan data produk
+        // Memuat tampilan dengan data produk
         $this->load->view('admin/header');
         $this->load->view('admin/product', $data);  // Pastikan Anda sudah membuat view 'admin/product.php'
     }
@@ -148,7 +152,7 @@ class Admin extends CI_Controller
     public function create_product()
     {
         if ($this->input->post()) {
-            // Validasi form produk
+            // Aturan validasi form untuk produk
             $this->form_validation->set_rules('name', 'Product Name', 'required');
             $this->form_validation->set_rules('description', 'Description', 'required');
             $this->form_validation->set_rules('price', 'Price', 'required|numeric');
@@ -162,7 +166,7 @@ class Admin extends CI_Controller
                 die();
             }
 
-            // Data produk yang akan disimpan
+            // Menyiapkan data produk yang akan disimpan
             $product_data = [
                 'name' => $this->input->post('name'),
                 'description' => $this->input->post('description'),
@@ -177,58 +181,55 @@ class Admin extends CI_Controller
                 'sale_end_date' => null,  // Defaultkan null untuk sale_end_date
             ];
 
-            // Jika Sale Label adalah 'Sale', proses tanggalnya
+            // Memproses tanggal jika sale label adalah 'Sale'
             if ($this->input->post('sale_label') === 'Sale') {
-                // Ambil tanggal sale_end_date
                 $sale_end_date = $this->input->post('sale_end_date');
                 if ($sale_end_date) {
-                    // Pastikan tanggal valid, konversi ke format Y-m-d H:i:s
+                    // Mengkonversi tanggal ke format yang sesuai
                     $sale_end_date = date('Y-m-d H:i:s', strtotime($sale_end_date));
                     $product_data['sale_end_date'] = $sale_end_date;
                 } else {
-                    // Jika tidak ada tanggal yang diberikan, set sebagai null
                     $product_data['sale_end_date'] = null;
                 }
             }
 
-            // Insert data produk dan ambil product_id yang baru
+            // Menyimpan produk baru dan mendapatkan ID produk
             $this->Admin_model->create_product($product_data);
             $product_id = $this->db->insert_id(); // Mendapatkan ID produk yang baru
 
             // Jika produk berhasil disimpan
             if ($product_id) {
-                // Mendapatkan data varian produk (array)
-                $variant_names = $this->input->post('variant_name'); // Array of variant names
-                $variant_images = $this->input->post('variant_img'); // Array of variant images
+                // Mengambil data varian produk (array)
+                $variant_names = $this->input->post('variant_name'); // Nama varian
+                $variant_images = $this->input->post('variant_img'); // Gambar varian
 
-                // Loop untuk memasukkan setiap varian secara terpisah
+                // Memasukkan varian produk jika ada
                 if (!empty($variant_names) && count($variant_names) == count($variant_images)) {
                     foreach ($variant_names as $index => $variant_name) {
                         $variant_data = [
-                            'product_id' => $product_id,  // Gunakan product_id yang baru saja dibuat
+                            'product_id' => $product_id,  // Menggunakan product_id yang baru saja dibuat
                             'variant_name' => $variant_name,
                             'image' => isset($variant_images[$index]) ? $variant_images[$index] : '',
                         ];
 
-                        // Insert varian produk ke database
+                        // Menyimpan varian produk
                         $this->Admin_model->create_product_variant($variant_data);
                     }
 
-                    // Set flash message sukses
                     $this->session->set_flashdata('success', 'Product and variants created successfully.');
                 } else {
-                    // Jika jumlah varian name dan image tidak cocok
+                    // Jika jumlah nama varian dan gambar tidak cocok
                     $this->session->set_flashdata('error', 'Variant names and images do not match.');
                 }
             } else {
                 $this->session->set_flashdata('error', 'Failed to create product.');
             }
 
-            // Redirect ke halaman produk
+            // Arahkan ke halaman produk
             redirect('admin/product');
         }
 
-        // Ambil data status produk untuk dropdown
+        // Mengambil data status produk untuk dropdown
         $data['statuses'] = $this->Admin_model->get_product_statuses();
         $this->load->view('admin/header');
         $this->load->view('admin/create_product', $data);
@@ -246,66 +247,115 @@ class Admin extends CI_Controller
     }
 
     public function edit_product($product_id)
-    {
-        // Ambil data produk berdasarkan ID
-        $data['product'] = $this->Admin_model->get_product_by_id($product_id);
-        $data['variants'] = $this->Admin_model->get_product_variants($product_id); // Ambil data variant
+{
+    // Fetch product data
+    $data['product'] = $this->Admin_model->get_product_by_id($product_id);
+    $data['variants'] = $this->Admin_model->get_product_variants($product_id); // Fetch product variants
 
-        if (!$data['product']) {
-            show_404();
-        }
+    if (!$data['product']) {
+        show_404();
+    }
 
-        if ($this->input->post()) {
-            // Validasi form
-            $this->form_validation->set_rules('name', 'Product Name', 'required');
-            $this->form_validation->set_rules('description', 'Description', 'required');
-            $this->form_validation->set_rules('price', 'Price', 'required|numeric');
-            $this->form_validation->set_rules('stock_quantity', 'Stock Quantity', 'required|numeric');
-            $this->form_validation->set_rules('status_id', 'Status', 'required');
+    if ($this->input->post()) {
+        // Validate form inputs for the product
+        $this->form_validation->set_rules('name', 'Product Name', 'required');
+        $this->form_validation->set_rules('description', 'Description', 'required');
+        $this->form_validation->set_rules('price', 'Price', 'required|numeric');
+        $this->form_validation->set_rules('stock_quantity', 'Stock Quantity', 'required|numeric');
+        $this->form_validation->set_rules('status_id', 'Status', 'required');
+        $this->form_validation->set_rules('discount_percentage', 'Discount Percentage', 'required|numeric'); // Discount validation
+        $this->form_validation->set_rules('sale_label', 'Sale Label', 'required');
+        
+        if ($this->form_validation->run()) {
+            // Collect form data including discount_percentage
+            $product_data = [
+                'name' => $this->input->post('name'),
+                'description' => $this->input->post('description'),
+                'price' => $this->input->post('price'),
+                'stock_quantity' => $this->input->post('stock_quantity'),
+                'status_id' => $this->input->post('status_id'),
+                'sale_label' => $this->input->post('sale_label'),
+                'image' => $this->input->post('image'),
+                'hover_image' => $this->input->post('hover_image'),
+                'discount_percentage' => $this->input->post('discount_percentage') ?: null,
+                'sale_end_date' => null,  // Defaultkan null untuk sale_end_date
+            ];
 
-            if ($this->form_validation->run()) {
-                // Update data produk
-                $product_data = [
-                    'name' => $this->input->post('name'),
-                    'description' => $this->input->post('description'),
-                    'price' => $this->input->post('price'),
-                    'stock_quantity' => $this->input->post('stock_quantity'),
-                    'status_id' => $this->input->post('status_id'),
-                ];
+            // Compare existing product data with new data
+            foreach ($product_data as $key => $value) {
+                // Skip update if no change is detected
+                if ($data['product'][$key] == $value) {
+                    unset($product_data[$key]); // Remove the key if no change
+                }
+            }
 
+            if (!empty($product_data)) {
+                // If there are changes, update product
                 if ($this->Admin_model->update_product($product_id, $product_data)) {
-                    // Update data variant
-                    $variant_data = [
-                        'variant_name' => $this->input->post('variant_name'),
-                        'variant_img' => $this->input->post('variant_img')
-                    ];
-
-                    if ($this->Admin_model->update_product_variant($product_id, $variant_data)) {
-                        $this->session->set_flashdata('success', 'Product and variants updated successfully.');
-                    } else {
-                        $this->session->set_flashdata('error', 'Failed to update product variants.');
-                    }
+                    $this->session->set_flashdata('success', 'Product updated successfully.');
                 } else {
                     $this->session->set_flashdata('error', 'Failed to update product.');
                 }
-                redirect('admin/product');
             }
-        }
 
-        // Ambil data status produk untuk dropdown
-        $data['statuses'] = $this->Admin_model->get_product_statuses();
-        $this->load->view('admin/header');
-        $this->load->view('admin/edit_product', $data);
+            // Handle variants (if any new variants are added or existing ones modified)
+            $variant_names = $this->input->post('variant_name');
+            $variant_images = $this->input->post('variant_img');
+
+            if (!empty($variant_names) && count($variant_names) == count($variant_images)) {
+                // Check if variants changed (existing variants vs submitted)
+                $existing_variants = array_column($data['variants'], 'variant_name');
+
+                // Only insert or update if variants are different
+                for ($i = 0; $i < count($variant_names); $i++) {
+                    if (!in_array($variant_names[$i], $existing_variants)) {
+                        $variant_data = [
+                            'variant_name' => $variant_names[$i],
+                            'variant_img' => $variant_images[$i], // Use the correct column name here, e.g., 'image'
+                        ];
+
+                        // Insert the new variant
+                        $this->Admin_model->insert_product_variant($product_id, $variant_data);
+                    }
+                }
+
+                // Check if any variants were removed
+                foreach ($existing_variants as $existing_variant) {
+                    if (!in_array($existing_variant, $variant_names)) {
+                        // If a variant is removed from the form, delete it
+                        $this->Admin_model->delete_variant_by_name($product_id, $existing_variant);
+                    }
+                }
+
+                $this->session->set_flashdata('success', 'Product and variants updated successfully.');
+            } else {
+                $this->session->set_flashdata('error', 'Invalid variant data.');
+            }
+
+            redirect('admin/product');
+        }
     }
 
+    // Fetch the status for dropdowns
+    $data['statuses'] = $this->Admin_model->get_product_statuses();
+    $this->load->view('admin/header');
+    $this->load->view('admin/edit_product', $data);
+}
 
-    public function delete_product($product_id)
-    {
-        if ($this->Admin_model->delete_product($product_id)) {
-            $this->session->set_flashdata('success', 'Product deleted successfully.');
-        } else {
-            $this->session->set_flashdata('error', 'Failed to delete product.');
-        }
-        redirect('admin/product');
+
+public function delete_product($product_id)
+{
+    // First, delete the product variants
+    $this->Admin_model->delete_product_variants($product_id);
+
+    // Now, delete the product itself
+    $this->db->where('id', $product_id);
+    if ($this->db->delete('products')) {
+        $this->session->set_flashdata('success', 'Product and its variants were successfully deleted.');
+    } else {
+        $this->session->set_flashdata('error', 'Failed to delete product.');
     }
+    redirect('admin/product');
+}
+
 }
