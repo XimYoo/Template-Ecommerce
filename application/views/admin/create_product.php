@@ -1,7 +1,8 @@
 <!-- Sidebar -->
+
 <body class="g-sidenav-show  bg-gray-100">
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" id="sidenav-main">
-    <div class="sidenav-header">
+        <div class="sidenav-header">
             <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
             <a class="navbar-brand m-0" href="<?php echo base_url('admin/dashboard'); ?>">
                 <img src="<?php echo base_url('assets/images/logoapp.png'); ?>" class="navbar-brand-img" alt="main_logo" style="height: 60px; width: auto;">
@@ -33,7 +34,7 @@
 
                 <!-- User Menu -->
                 <li class="nav-item">
-                    <a class="nav-link active" href="<?php echo base_url('admin/user'); ?>">
+                    <a class="nav-link" href="<?php echo base_url('admin/user'); ?>">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/1999/xlink">
                                 <title>customer-support</title>
@@ -56,7 +57,7 @@
 
                 <!-- Product Menu -->
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo base_url('admin/product'); ?>">
+                    <a class="nav-link active" href="<?php echo base_url('admin/product'); ?>">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/1999/xlink">
                                 <title>product</title>
@@ -176,99 +177,155 @@
                 <!-- Header bar with navigation -->
                 <div class="flex justify-between items-center p-4 border-b">
                     <div class="flex items-center gap-3">
-                        <a href="<?php echo base_url('admin/user'); ?>" class="p-2 hover:bg-gray-100 rounded-lg">
+                        <a href="<?php echo base_url('admin/product'); ?>" class="p-2 hover:bg-gray-100 rounded-lg">
                             <i class="fas fa-arrow-left text-gray-600"></i>
                         </a>
                         <div>
-                            <h2 class="text-xl font-semibold text-gray-900">Create New User</h2>
-                            <p class="text-sm text-gray-500">Add new user to the system</p>
+                            <h2 class="text-xl font-semibold text-gray-900">Create New Product</h2>
+                            <p class="text-sm text-gray-500">Add new product to the system</p>
                         </div>
                     </div>
                 </div>
-
-                <!-- Form -->
-                <form role="form" method="POST" action="<?php echo base_url('admin/create_user'); ?>" class="p-4">
-                    <div class="grid grid-cols-3 gap-4">
-                        <!-- Full Name -->
+                <!-- form -->
+                <form role="form" method="POST" action="<?php echo base_url('admin/create_product'); ?>" class="p-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Product Name -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
                             <input
                                 type="text"
-                                name="full_name"
+                                name="name"
                                 class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
-                                placeholder="Enter full name"
+                                placeholder="Enter product name"
                                 required>
                         </div>
 
-                        <!-- Email -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                            <input
-                                type="email"
-                                name="email"
+                        <!-- Description -->
+                        <div class="col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                            <textarea
+                                name="description"
                                 class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
-                                placeholder="Enter email"
-                                required>
+                                placeholder="Enter product description"
+                                rows="3"
+                                required></textarea>
                         </div>
 
-                        <!-- Password -->
+                        <!-- Price -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                            <input
-                                type="password"
-                                name="password"
-                                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
-                                placeholder="Enter password"
-                                required>
-                        </div>
-
-                        <!-- Phone Number -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Price</label>
                             <input
                                 type="text"
-                                name="phone_number"
+                                name="price"
                                 class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
-                                placeholder="Enter phone number"
+                                placeholder="Enter product price"
                                 required>
                         </div>
 
-                        <!-- Province Dropdown -->
+                        <!-- Discount Percentage -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Province</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Discount Percentage</label>
                             <select
-                                name="province"
-                                class="w-full px-3 py-2 border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                name="discount_percentage"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gray-200">
+                                <option value="" disabled selected>Select discount percentage</option>
+                                <option value="10">10%</option>
+                                <option value="15">15%</option>
+                                <option value="20">20%</option>
+                                <option value="25">25%</option>
+                                <option value="30">30%</option>
+                                <option value="50">50%</option>
+                                <option value="70">70%</option>
+                            </select>
+                        </div>
+
+                        <!-- Image -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Image (e.g., product1.jpg)</label>
+                            <input
+                                type="text"
+                                name="image"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                placeholder="Enter image filename"
                                 required>
-                                <option value="" disabled selected>Select province</option>
-                                <?php foreach ($provinces as $province): ?>
-                                    <option value="<?php echo $province['id']; ?>"><?php echo $province['name']; ?></option>
+                        </div>
+
+                        <!-- Hover Image -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Hover Image (e.g., product1_hover.jpg)</label>
+                            <input
+                                type="text"
+                                name="hover_image"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                placeholder="Enter hover image filename">
+                        </div>
+
+                        <!-- Variant Name -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Variant Name</label>
+                            <input
+                                type="text"
+                                name="variant_name"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                placeholder="Enter variant name"
+                                required>
+                        </div>
+
+                        <!-- Variant Image -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Variant Image (e.g., variant1.jpg)</label>
+                            <input
+                                type="text"
+                                name="variant_img"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                placeholder="Enter variant image filename">
+                        </div>
+
+                        <!-- Stock Quantity -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Stock Quantity</label>
+                            <input
+                                type="text"
+                                name="stock_quantity"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                placeholder="Enter stock quantity"
+                                required>
+                        </div>
+
+                        <!-- Sale Label -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Sale Label</label>
+                            <select
+                                name="sale_label"
+                                id="sale-label-select"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gray-200">
+                                <option value="" disabled selected>Select Sale Label</option>
+                                <option value="Sale">Sale</option>
+                                <option value="New">New</option>
+                                <option value="Best Seller">Best Seller</option>
+                                <option value="50% Off">50% Off</option>
+                            </select>
+                        </div>
+
+                        <!-- Sale End Date (Initially hidden) -->
+                        <div id="sale-end-date" style="display: none;">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Sale End Date</label>
+                            <input
+                                type="datetime-local"
+                                name="sale_end_date"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200">
+                        </div>
+
+
+                        <!-- Status Dropdown with Search -->
+                        <div class="mb-3 relative">
+                            <label for="status-select" class="text-sm font-medium text-gray-700 mb-1">Select Status</label>
+                            <select name="status_id" id="status-select" class="form-control mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                                <option value="" disabled selected>Select status</option>
+                                <?php foreach ($statuses as $status): ?>
+                                    <option value="<?php echo $status->id; ?>"><?php echo $status->status; ?></option>
                                 <?php endforeach; ?>
                             </select>
-                        </div>
-
-                        <!-- Role Dropdown -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
-                            <select
-                                name="role"
-                                class="w-full px-3 py-2 border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gray-200"
-                                required>
-                                <option value="" disabled selected>Select role</option>
-                                <option value="admin">Admin</option>
-                                <option value="user">User</option>
-                            </select>
-                        </div>
-
-                        <!-- Address - spans full width -->
-                        <div class="col-span-3">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
-                            <textarea
-                                name="address"
-                                class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
-                                placeholder="Enter address"
-                                rows="2"
-                                required></textarea>
                         </div>
                     </div>
 
@@ -277,10 +334,27 @@
                         <button
                             type="submit"
                             class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors">
-                            Create User
+                            Create Product
                         </button>
                     </div>
                 </form>
+                <script>
+                    // Ambil elemen Sale Label dan Sale End Date
+                    const saleLabelSelect = document.getElementById('sale-label-select');
+                    const saleEndDateDiv = document.getElementById('sale-end-date');
+
+                    // Fungsi untuk mengecek pilihan Sale Label
+                    saleLabelSelect.addEventListener('change', function() {
+                        if (saleLabelSelect.value === 'Sale') {
+                            saleEndDateDiv.style.display = 'block'; // Menampilkan Sale End Date
+                        } else {
+                            saleEndDateDiv.style.display = 'none'; // Menyembunyikan Sale End Date
+                        }
+                    });
+                </script>
+
+
+
             </div>
         </div>
     </main>

@@ -173,100 +173,94 @@
         <!-- End Navbar -->
         <div class="container-fluid py-4">
             <!-- Tables -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="card mb-4">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h6 class="m-0">User Table</h6>
-                            <a href="<?php echo site_url('admin/create_user'); ?>" class="btn btn-primary btn-sm">
-                                Create New User
-                            </a>
-                        </div>
-                        <div class="card-body p-0">
-                            <div class="table-responsive">
-                                <table class="table align-items-center mb-0">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th>Full Name</th>
-                                            <th>Email</th>
-                                            <th class="text-center">Phone Number</th>
-                                            <th class="text-center">Province</th>
-                                            <th class="text-center">Created At</th>
-                                            <th class="text-center">Role</th>
-                                            <th class="text-center">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php if (!empty($users)): ?>
-                                            <?php foreach ($users as $user): ?>
-                                                <tr>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <?php
-                                                            // Array berisi nama file gambar
-                                                            $images = [
-                                                                'team-1.jpg',
-                                                                'team-2.jpg',
-                                                                'team-3.jpg',
-                                                                'team-4.jpg'
-                                                            ];
-
-                                                            // Memilih gambar secara acak
-                                                            $random_image = $images[array_rand($images)];
-                                                            ?>
-                                                            <img src="<?php echo base_url('assets/images/' . $random_image); ?>" class="rounded-circle me-2" alt="user-avatar" style="width: 40px; height: 40px;">
-                                                            <span class="text-dark font-weight-bold" style="font-size: 0.875rem;"><?php echo htmlspecialchars($user['full_name'], ENT_QUOTES, 'UTF-8'); ?></span>
-                                                        </div>
-
-
-                                                    </td>
-                                                    <td>
-                                                        <span class="text-secondary" style="font-size: 0.875rem;"><?php echo $user['email']; ?></span>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <span class="text-secondary" style="font-size: 0.875rem;"><?php echo $user['phone_number']; ?></span>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <span class="text-secondary" style="font-size: 0.875rem;"><?php echo $user['province_name']; ?></span>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <span class="text-secondary" style="font-size: 0.875rem;"><?php echo date('Y-m-d H:i:s', strtotime($user['created_at'])); ?></span>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <span class="text-secondary" style="font-size: 0.875rem;"><?php echo ucfirst($user['role']); ?></span>
-                                                    </td>
-                                                    <td class="text-center align-middle">
-                                                        <div class="d-flex justify-content-center align-items-center">
-                                                            <a href="<?php echo site_url('admin/edit_user/' . $user['user_id']); ?>"
-                                                                class="btn btn-success btn-sm px-2 me-1"
-                                                                title="Edit"
-                                                                style="font-size: 0.55rem;">
-                                                                Edit
-                                                            </a>
-                                                            <a href="<?php echo site_url('admin/delete_user/' . $user['user_id']); ?>"
-                                                                class="btn btn-danger btn-sm px-2"
-                                                                title="Delete"
-                                                                style="font-size: 0.55rem;"
-                                                                onclick="return confirm('Are you sure you want to delete this user?');">
-                                                                Delete
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        <?php else: ?>
-                                            <tr>
-                                                <td colspan="7" class="text-center text-secondary" style="font-size: 0.875rem;">No users found.</td>
-                                            </tr>
-                                        <?php endif; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h6 class="m-0">Product Table</h6>
+                <a href="<?php echo site_url('admin/create_product'); ?>" class="btn btn-primary btn-sm">
+                    Create New Product
+                </a>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table align-items-center mb-0">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th class="text-center">Price</th>
+                                <th class="text-center">Discount</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Sale End Date</th>
+                                <th class="text-center">Created At</th>
+                                <th class="text-center">Stock</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (!empty($products)): ?>
+                                <?php foreach ($products as $product): ?>
+                                    <tr>
+                                        <td>
+                                            <img src="<?php echo base_url('assets/images/products/' . $product->image); ?>" class="rounded" alt="product-image" style="width: 60px; height: 60px;">
+                                        </td>
+                                        <td>
+                                            <span class="text-dark font-weight-bold" style="font-size: 0.875rem;"><?php echo htmlspecialchars($product->name, ENT_QUOTES, 'UTF-8'); ?></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="text-secondary" style="font-size: 0.875rem;"><?php echo number_format($product->price, 2, ',', '.'); ?></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="text-success" style="font-size: 0.875rem;"><?php echo $product->discount_percentage . '%'; ?></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="text-secondary" style="font-size: 0.875rem;"><?php echo ucfirst($product->status); ?></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="text-secondary" style="font-size: 0.875rem;"><?php echo date('Y-m-d', strtotime($product->sale_end_date)); ?></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="text-secondary" style="font-size: 0.875rem;"><?php echo date('Y-m-d', strtotime($product->created_at)); ?></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="text-secondary" style="font-size: 0.875rem;"><?php echo $product->stock_quantity; ?></span>
+                                        </td>
+                                        <td class="text-center align-middle">
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <a href="<?php echo site_url('admin/edit_product/' . $product->id); ?>"
+                                                   class="btn btn-success btn-sm px-2 me-1"
+                                                   title="Edit"
+                                                   style="font-size: 0.55rem;">
+                                                   Edit
+                                                </a>
+                                                <a href="<?php echo site_url('admin/delete_product/' . $product->id); ?>"
+                                                   class="btn btn-danger btn-sm px-2"
+                                                   title="Delete"
+                                                   style="font-size: 0.55rem;"
+                                                   onclick="return confirm('Are you sure you want to delete this product?');">
+                                                   Delete
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="9" class="text-center text-secondary" style="font-size: 0.875rem;">No products found.</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <!-- End Tables -->
+        </div>
+    </div>
+</div>
+<!-- End Tables -->
+
+
+
         </div>
     </main>
     <!-- Core JS Files -->

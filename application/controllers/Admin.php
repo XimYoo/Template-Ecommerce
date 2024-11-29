@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Admin extends CI_Controller
@@ -75,7 +76,6 @@ class Admin extends CI_Controller
         $this->load->view('admin/create_user', $data);
     }
 
-
     public function edit_user($user_id)
     {
         // Fetch the existing user data
@@ -123,7 +123,6 @@ class Admin extends CI_Controller
         $this->load->view('admin/edit_user', $data);
     }
 
-
     public function delete_user($user_id)
     {
         if ($this->Admin_model->delete_user($user_id)) {
@@ -134,15 +133,176 @@ class Admin extends CI_Controller
         redirect('admin/user');
     }
 
+    // --- Product Management Methods ---
+
     public function product()
     {
+        // Ambil semua produk dari model
+        $data['products'] = $this->Admin_model->get_all_products();
+
+        // Load tampilan dengan data produk
         $this->load->view('admin/header');
-        $this->load->view('admin/product');  // You need to create 'admin/product.php'
+        $this->load->view('admin/product', $data);  // Pastikan Anda sudah membuat view 'admin/product.php'
     }
 
-    public function pages()
+    public function create_product()
+{
+    if ($this->input->post()) {
+        // Validasi form produk
+        $this->form_validation->set_rules('name', 'Product Name', 'required');
+        $this->form_validation->set_rules('description', 'Description', 'required');
+        $this->form_validation->set_rules('price', 'Price', 'required|numeric');
+        $this->form_validation->set_rules('stock_quantity', 'Stock Quantity', 'required|numeric');
+        $this->form_validation->set_rules('status_id', 'Status', 'required');
+        $this->form_validation->set_rules('sale_label', 'Sale Label', 'required');
+
+        // Jika validasi gagal
+        if ($this->form_validation->run() == FALSE) {
+            echo validation_errors();
+            die();
+        }
+
+        // Data produk yang akan disimpan
+        $product_data = [
+            'name' => $this->input->post('name'),
+            'description' => $this->input->post('description'),
+            'price' => $this->input->post('price'),
+            'stock_quantity' => $this->input->post('stock_quantity'),
+            'status_id' => $this->input->post('status_id'),
+            'sale_label' => $this->input->post('sale_label'),
+            'image' => $this->input->post('image'),
+            'hover_image' => $this->input->post('hover_image'),
+            'created_at' => date('Y-m-d H:i:s'),
+            'discount_percentage' => $this->input->post('discount_percentage') ?: null,
+            'sale_end_date' => null,  // Defaultkan null untuk sale_end_date
+        ];
+
+        // Jika Sale Label adalah 'Sale', proses tanggalnya
+        if ($this->input->post('sale_label') === 'Sale') {
+            // Ambil tanggal sale_end_date
+            $sale_end_date = $this->input->post('sale_end_date');
+            if ($sale_end_date) {
+                // Pastikan tanggal valid, konversi ke format Y-m-d H:i:s
+                $sale_end_date = date('Y-m-d H:i:s', strtotime($sale_end_date));
+                $product_data['sale_end_date'] = $sale_end_date;
+            } else {
+                // Jika tidak ada tanggal yang diberikan, set sebagai null
+                $product_data['sale_end_date'] = null;
+            }
+        }
+
+        // Insert data produk dan ambil product_id yang baru
+        $this->Admin_model->create_product($product_data);
+        $product_id = $this->db->insert_id(); // Mendapatkan ID produk yang baru
+
+        // Jika produk berhasil disimpan
+        if ($product_id) {
+            // Data untuk varian produk
+            $variant_data = [
+                'product_id' => $product_id,  // Gunakan product_id yang baru saja dibuat
+                'variant_name' => $this->input->post('variant_name'),
+                'image' => $this->input->post('variant_img'), // Nama file gambar
+            ];
+
+            // Insert varian produk ke database
+            if ($this->Admin_model->create_product_variant($variant_data)) {
+                $this->session->set_flashdata('success', 'Product and variants created successfully.');
+            } else {
+                $this->session->set_flashdata('error', 'Failed to create product variants.');
+            }
+        } else {
+            $this->session->set_flashdata('error', 'Failed to create product.');
+        }
+
+        // Redirect ke halaman produk
+        redirect('admin/product');
+    }
+
+    // Ambil data status produk untuk dropdown
+    $data['statuses'] = $this->Admin_model->get_product_statuses();
+    $this->load->view('admin/header');
+    $this->load->view('admin/create_product', $data);
+}
+
+
+
+
+
+
+
+
+    public function valid_date($date)
     {
+        $date_format = 'Y-m-d';
+        $d = DateTime::createFromFormat($date_format, $date);
+        if ($d && $d->format($date_format) === $date) {
+            return true;
+        }
+        $this->form_validation->set_message('valid_date', 'The {field} field must be in a valid format (YYYY-MM-DD).');
+        return false;
+    }
+
+    public function edit_product($product_id)
+    {
+        // Ambil data produk berdasarkan ID
+        $data['product'] = $this->Admin_model->get_product_by_id($product_id);
+        $data['variants'] = $this->Admin_model->get_product_variants($product_id); // Ambil data variant
+
+        if (!$data['product']) {
+            show_404();
+        }
+
+        if ($this->input->post()) {
+            // Validasi form
+            $this->form_validation->set_rules('name', 'Product Name', 'required');
+            $this->form_validation->set_rules('description', 'Description', 'required');
+            $this->form_validation->set_rules('price', 'Price', 'required|numeric');
+            $this->form_validation->set_rules('stock_quantity', 'Stock Quantity', 'required|numeric');
+            $this->form_validation->set_rules('status_id', 'Status', 'required');
+
+            if ($this->form_validation->run()) {
+                // Update data produk
+                $product_data = [
+                    'name' => $this->input->post('name'),
+                    'description' => $this->input->post('description'),
+                    'price' => $this->input->post('price'),
+                    'stock_quantity' => $this->input->post('stock_quantity'),
+                    'status_id' => $this->input->post('status_id'),
+                ];
+
+                if ($this->Admin_model->update_product($product_id, $product_data)) {
+                    // Update data variant
+                    $variant_data = [
+                        'variant_name' => $this->input->post('variant_name'),
+                        'variant_img' => $this->input->post('variant_img')
+                    ];
+
+                    if ($this->Admin_model->update_product_variant($product_id, $variant_data)) {
+                        $this->session->set_flashdata('success', 'Product and variants updated successfully.');
+                    } else {
+                        $this->session->set_flashdata('error', 'Failed to update product variants.');
+                    }
+                } else {
+                    $this->session->set_flashdata('error', 'Failed to update product.');
+                }
+                redirect('admin/product');
+            }
+        }
+
+        // Ambil data status produk untuk dropdown
+        $data['statuses'] = $this->Admin_model->get_product_statuses();
         $this->load->view('admin/header');
-        $this->load->view('admin/pages');  // You need to create 'admin/pages.php'
+        $this->load->view('admin/edit_product', $data);
+    }
+
+
+    public function delete_product($product_id)
+    {
+        if ($this->Admin_model->delete_product($product_id)) {
+            $this->session->set_flashdata('success', 'Product deleted successfully.');
+        } else {
+            $this->session->set_flashdata('error', 'Failed to delete product.');
+        }
+        redirect('admin/product');
     }
 }
