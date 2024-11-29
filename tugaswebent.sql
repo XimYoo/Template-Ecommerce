@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2024 at 07:08 AM
+-- Generation Time: Nov 29, 2024 at 05:28 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 7.3.33
 
@@ -40,7 +40,7 @@ CREATE TABLE `menus` (
 --
 
 INSERT INTO `menus` (`id`, `title`, `url`, `parent_id`, `is_active`) VALUES
-(1, 'HOME', '#', NULL, 1),
+(1, 'HOME', 'home', NULL, 1),
 (2, 'SHOP', 'shop', NULL, 1),
 (3, 'PRODUCT', '#', NULL, 1),
 (4, 'PAGES', '#', NULL, 1),
@@ -141,7 +141,8 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`id`, `name`, `description`, `price`, `discount_percentage`, `image`, `hover_image`, `stock_quantity`, `sale_label`, `sale_end_date`, `created_at`, `updated_at`, `status_id`) VALUES
 (1, 'Oxford Cuban Shirt', 'A stylish and comfortable shirt made of high-quality cotton.', 99.00, 20, 'product1.jpg', '', 10, 'Sale', '2024-11-28 12:25:24', '2024-11-18 14:27:15', '2024-11-27 05:25:28', 1),
-(2, 'Flannel Collar Shirt', 'Flannel Collar Shirt with a comfortable and stylish design.', 199.00, 20, 'product3.jpg', 'product3-1.jpg', 100, 'New', NULL, '2024-11-26 16:22:32', '2024-11-27 05:57:48', 7);
+(2, 'Flannel Collar Shirt', 'Flannel Collar Shirt with a comfortable and stylish design.', 199.00, 20, 'product3.jpg', 'product3-1.jpg', 100, 'New', NULL, '2024-11-26 16:22:32', '2024-11-27 05:57:48', 7),
+(12, 'High-Waisted Pant', 'Celana Keren', 139.00, 10, 'product7.jpg', 'product7-1.jpg', 10, 'Sale', '2024-11-29 11:12:00', '2024-11-28 22:10:26', '2024-11-29 04:10:26', 1);
 
 -- --------------------------------------------------------
 
@@ -212,7 +213,8 @@ INSERT INTO `product_variants` (`id`, `product_id`, `variant_name`, `image`, `is
 (4, 1, 'Orange', 'product1-3.jpg', 1, NULL, 0),
 (5, 2, 'Red', 'product3_red.jpg', 1, 99.00, NULL),
 (6, 2, 'Orange', 'product3_orange.jpg', 1, 99.00, NULL),
-(7, 2, 'Yellow', 'product3_yellow.jpg', 1, 99.00, NULL);
+(7, 2, 'Yellow', 'product3_yellow.jpg', 1, 99.00, NULL),
+(12, 12, 'black', 'blue-red.jpg', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -263,9 +265,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `full_name`, `address`, `phone_number`, `province_id`, `email`, `password`, `created_at`, `updated_at`, `remember_token`, `role`, `login_attempts`) VALUES
-(1, 'William Hutubessy', 'Jaksel', '081289536383', 2, 'williamhutubessy@gmail.com', '$2y$10$6vY5CCecz82.fC98o/cQq.ojg7xKmJf7F2Z.sie8WD1MipMpNk5wm', '2024-11-17 14:37:09', '2024-11-26 11:02:30', 'f77bb96183fc30f2b3a8090a0a348daf2c466ed1f66d26bfb4703f4b8c956d35', 'admin', 0),
+(1, 'William Hutubessy', 'Jaksel', '081289536383', 2, 'williamhutubessy@gmail.com', '$2y$10$6vY5CCecz82.fC98o/cQq.ojg7xKmJf7F2Z.sie8WD1MipMpNk5wm', '2024-11-17 14:37:09', '2024-11-28 13:29:18', '544dd6d47734806e42ca286c917750d2d848dc47775d069594cc143e6d483e97', 'admin', 0),
 (9, 'John Doe', '123 Main St, Springfield, IL, USA', '081234567890', 3, 'johndoe@gmail.com', '$2y$10$m0KGUZHXkpnjQfKtLI3G0uEwh1kJBsDpQq8vOoCoK3eRoghy0fXRC', '2024-11-23 11:17:04', '2024-11-26 01:35:18', NULL, 'user', 0),
-(14, 'Jane Smith', '456 Oak St, Bogor, Jawa Barat, Indonesia', '082345678901', 3, 'janesmith@gmail.com', '$2y$10$l2zaatZAQegN.8b9HNl98e09K7HeQna0fmw3mker9pwL3zX44bNJ2', '2024-11-25 09:33:52', '2024-11-25 09:33:52', NULL, 'user', 0);
+(15, 'Jane Smith', '456 Oak St, Bogor, Jawa Barat,jakarta', '082345678901', 2, 'janesmith@gmail.com', '$2y$10$/NBvxS9eA6e7Kw9uAWtF2O/pB0ZBA2zW0q/X82scMlO6thsSokYkC', '2024-11-28 22:24:47', '2024-11-29 04:25:13', NULL, 'user', 0);
 
 --
 -- Indexes for dumped tables
@@ -339,7 +341,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `product_reviews`
@@ -357,7 +359,7 @@ ALTER TABLE `product_statuses`
 -- AUTO_INCREMENT for table `product_variants`
 --
 ALTER TABLE `product_variants`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `provinces`
@@ -369,7 +371,7 @@ ALTER TABLE `provinces`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
