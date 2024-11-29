@@ -248,26 +248,26 @@ class Admin extends CI_Controller
 
     public function edit_product($product_id)
 {
-    // Fetch product data
+    // Ambil data produk dan varian produk
     $data['product'] = $this->Admin_model->get_product_by_id($product_id);
-    $data['variants'] = $this->Admin_model->get_product_variants($product_id); // Fetch product variants
+    $data['variants'] = $this->Admin_model->get_product_variants($product_id); // Ambil data varian produk
 
     if (!$data['product']) {
-        show_404();
+        show_404(); // Jika produk tidak ditemukan, tampilkan error 404
     }
 
     if ($this->input->post()) {
-        // Validate form inputs for the product
+        // Validasi input form untuk produk
         $this->form_validation->set_rules('name', 'Product Name', 'required');
         $this->form_validation->set_rules('description', 'Description', 'required');
         $this->form_validation->set_rules('price', 'Price', 'required|numeric');
         $this->form_validation->set_rules('stock_quantity', 'Stock Quantity', 'required|numeric');
         $this->form_validation->set_rules('status_id', 'Status', 'required');
-        $this->form_validation->set_rules('discount_percentage', 'Discount Percentage', 'required|numeric'); // Discount validation
+        $this->form_validation->set_rules('discount_percentage', 'Discount Percentage', 'required|numeric'); // Validasi diskon
         $this->form_validation->set_rules('sale_label', 'Sale Label', 'required');
         
         if ($this->form_validation->run()) {
-            // Collect form data including discount_percentage
+            // Mengumpulkan data form produk termasuk discount_percentage
             $product_data = [
                 'name' => $this->input->post('name'),
                 'description' => $this->input->post('description'),
@@ -281,16 +281,28 @@ class Admin extends CI_Controller
                 'sale_end_date' => null,  // Defaultkan null untuk sale_end_date
             ];
 
-            // Compare existing product data with new data
+            // Jika produk dalam status sale, periksa dan tentukan tanggal sale_end_date
+            if ($this->input->post('sale_label') === 'Sale') {
+                $sale_end_date = $this->input->post('sale_end_date');
+                if ($sale_end_date) {
+                    // Mengkonversi tanggal ke format yang sesuai
+                    $sale_end_date = date('Y-m-d H:i:s', strtotime($sale_end_date));
+                    $product_data['sale_end_date'] = $sale_end_date;
+                } else {
+                    $product_data['sale_end_date'] = null; // Jika tidak ada tanggal, set null
+                }
+            }
+
+            // Bandingkan data produk yang sudah ada dengan data baru
             foreach ($product_data as $key => $value) {
-                // Skip update if no change is detected
+                // Abaikan update jika tidak ada perubahan
                 if ($data['product'][$key] == $value) {
-                    unset($product_data[$key]); // Remove the key if no change
+                    unset($product_data[$key]); // Hapus data yang tidak berubah
                 }
             }
 
             if (!empty($product_data)) {
-                // If there are changes, update product
+                // Jika ada perubahan, lakukan update produk
                 if ($this->Admin_model->update_product($product_id, $product_data)) {
                     $this->session->set_flashdata('success', 'Product updated successfully.');
                 } else {
@@ -298,31 +310,31 @@ class Admin extends CI_Controller
                 }
             }
 
-            // Handle variants (if any new variants are added or existing ones modified)
+            // Menangani varian produk (jika ada varian baru atau yang diubah)
             $variant_names = $this->input->post('variant_name');
             $variant_images = $this->input->post('variant_img');
 
             if (!empty($variant_names) && count($variant_names) == count($variant_images)) {
-                // Check if variants changed (existing variants vs submitted)
+                // Cek apakah varian berubah (varian yang ada vs yang dikirimkan)
                 $existing_variants = array_column($data['variants'], 'variant_name');
 
-                // Only insert or update if variants are different
+                // Hanya insert atau update jika varian berbeda
                 for ($i = 0; $i < count($variant_names); $i++) {
                     if (!in_array($variant_names[$i], $existing_variants)) {
                         $variant_data = [
                             'variant_name' => $variant_names[$i],
-                            'variant_img' => $variant_images[$i], // Use the correct column name here, e.g., 'image'
+                            'variant_img' => $variant_images[$i], // Gunakan nama kolom yang sesuai
                         ];
 
-                        // Insert the new variant
+                        // Insert varian baru
                         $this->Admin_model->insert_product_variant($product_id, $variant_data);
                     }
                 }
 
-                // Check if any variants were removed
+                // Cek jika ada varian yang dihapus
                 foreach ($existing_variants as $existing_variant) {
                     if (!in_array($existing_variant, $variant_names)) {
-                        // If a variant is removed from the form, delete it
+                        // Jika ada varian yang dihapus, hapus dari database
                         $this->Admin_model->delete_variant_by_name($product_id, $existing_variant);
                     }
                 }
@@ -332,15 +344,16 @@ class Admin extends CI_Controller
                 $this->session->set_flashdata('error', 'Invalid variant data.');
             }
 
-            redirect('admin/product');
+            redirect('admin/product'); // Setelah selesai, redirect ke halaman produk
         }
     }
 
-    // Fetch the status for dropdowns
+    // Ambil status produk untuk dropdown
     $data['statuses'] = $this->Admin_model->get_product_statuses();
     $this->load->view('admin/header');
-    $this->load->view('admin/edit_product', $data);
+    $this->load->view('admin/edit_product', $data); // Tampilkan halaman edit produk
 }
+
 
 
 public function delete_product($product_id)
