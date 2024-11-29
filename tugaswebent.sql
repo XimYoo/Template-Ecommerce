@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2024 at 05:28 AM
+-- Generation Time: Nov 29, 2024 at 07:16 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 7.3.33
 
@@ -142,7 +142,7 @@ CREATE TABLE `products` (
 INSERT INTO `products` (`id`, `name`, `description`, `price`, `discount_percentage`, `image`, `hover_image`, `stock_quantity`, `sale_label`, `sale_end_date`, `created_at`, `updated_at`, `status_id`) VALUES
 (1, 'Oxford Cuban Shirt', 'A stylish and comfortable shirt made of high-quality cotton.', 99.00, 20, 'product1.jpg', '', 10, 'Sale', '2024-11-28 12:25:24', '2024-11-18 14:27:15', '2024-11-27 05:25:28', 1),
 (2, 'Flannel Collar Shirt', 'Flannel Collar Shirt with a comfortable and stylish design.', 199.00, 20, 'product3.jpg', 'product3-1.jpg', 100, 'New', NULL, '2024-11-26 16:22:32', '2024-11-27 05:57:48', 7),
-(12, 'High-Waisted Pant', 'Celana Keren', 139.00, 10, 'product7.jpg', 'product7-1.jpg', 10, 'Sale', '2024-11-29 11:12:00', '2024-11-28 22:10:26', '2024-11-29 04:10:26', 1);
+(16, 'High-Waisted Pant', 'Celana Keren', 139.00, 10, 'product7.jpg', 'product7-1.jpg', 10, 'Sale', '2024-11-29 18:18:00', '2024-11-29 00:14:27', '2024-11-29 06:14:27', 2);
 
 -- --------------------------------------------------------
 
@@ -214,7 +214,8 @@ INSERT INTO `product_variants` (`id`, `product_id`, `variant_name`, `image`, `is
 (5, 2, 'Red', 'product3_red.jpg', 1, 99.00, NULL),
 (6, 2, 'Orange', 'product3_orange.jpg', 1, 99.00, NULL),
 (7, 2, 'Yellow', 'product3_yellow.jpg', 1, 99.00, NULL),
-(12, 12, 'black', 'blue-red.jpg', 1, NULL, NULL);
+(17, 16, 'Black', 'blue-red.jpg', 1, NULL, NULL),
+(18, 16, 'Maroon', 'blue-red.jpg', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -267,7 +268,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `full_name`, `address`, `phone_number`, `province_id`, `email`, `password`, `created_at`, `updated_at`, `remember_token`, `role`, `login_attempts`) VALUES
 (1, 'William Hutubessy', 'Jaksel', '081289536383', 2, 'williamhutubessy@gmail.com', '$2y$10$6vY5CCecz82.fC98o/cQq.ojg7xKmJf7F2Z.sie8WD1MipMpNk5wm', '2024-11-17 14:37:09', '2024-11-28 13:29:18', '544dd6d47734806e42ca286c917750d2d848dc47775d069594cc143e6d483e97', 'admin', 0),
 (9, 'John Doe', '123 Main St, Springfield, IL, USA', '081234567890', 3, 'johndoe@gmail.com', '$2y$10$m0KGUZHXkpnjQfKtLI3G0uEwh1kJBsDpQq8vOoCoK3eRoghy0fXRC', '2024-11-23 11:17:04', '2024-11-26 01:35:18', NULL, 'user', 0),
-(15, 'Jane Smith', '456 Oak St, Bogor, Jawa Barat,jakarta', '082345678901', 2, 'janesmith@gmail.com', '$2y$10$/NBvxS9eA6e7Kw9uAWtF2O/pB0ZBA2zW0q/X82scMlO6thsSokYkC', '2024-11-28 22:24:47', '2024-11-29 04:25:13', NULL, 'user', 0);
+(16, 'Jane Smith', '456 Oak St, Bogor, Jawa Barat, Indonesia\r\n', '082345678901', 3, 'janesmith@gmail.com', '$2y$10$5U7QTvCPQQKblCajZp4yre8xq8kEtoyEVaSs9DiVRBmrTldknI4JS', '2024-11-29 00:13:32', '2024-11-29 06:13:37', NULL, 'admin', 0);
 
 --
 -- Indexes for dumped tables
@@ -341,7 +342,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `product_reviews`
@@ -359,7 +360,7 @@ ALTER TABLE `product_statuses`
 -- AUTO_INCREMENT for table `product_variants`
 --
 ALTER TABLE `product_variants`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `provinces`
@@ -371,7 +372,7 @@ ALTER TABLE `provinces`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Constraints for dumped tables
