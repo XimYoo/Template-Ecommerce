@@ -146,90 +146,93 @@ class Admin extends CI_Controller
     }
 
     public function create_product()
-{
-    if ($this->input->post()) {
-        // Validasi form produk
-        $this->form_validation->set_rules('name', 'Product Name', 'required');
-        $this->form_validation->set_rules('description', 'Description', 'required');
-        $this->form_validation->set_rules('price', 'Price', 'required|numeric');
-        $this->form_validation->set_rules('stock_quantity', 'Stock Quantity', 'required|numeric');
-        $this->form_validation->set_rules('status_id', 'Status', 'required');
-        $this->form_validation->set_rules('sale_label', 'Sale Label', 'required');
+    {
+        if ($this->input->post()) {
+            // Validasi form produk
+            $this->form_validation->set_rules('name', 'Product Name', 'required');
+            $this->form_validation->set_rules('description', 'Description', 'required');
+            $this->form_validation->set_rules('price', 'Price', 'required|numeric');
+            $this->form_validation->set_rules('stock_quantity', 'Stock Quantity', 'required|numeric');
+            $this->form_validation->set_rules('status_id', 'Status', 'required');
+            $this->form_validation->set_rules('sale_label', 'Sale Label', 'required');
 
-        // Jika validasi gagal
-        if ($this->form_validation->run() == FALSE) {
-            echo validation_errors();
-            die();
-        }
-
-        // Data produk yang akan disimpan
-        $product_data = [
-            'name' => $this->input->post('name'),
-            'description' => $this->input->post('description'),
-            'price' => $this->input->post('price'),
-            'stock_quantity' => $this->input->post('stock_quantity'),
-            'status_id' => $this->input->post('status_id'),
-            'sale_label' => $this->input->post('sale_label'),
-            'image' => $this->input->post('image'),
-            'hover_image' => $this->input->post('hover_image'),
-            'created_at' => date('Y-m-d H:i:s'),
-            'discount_percentage' => $this->input->post('discount_percentage') ?: null,
-            'sale_end_date' => null,  // Defaultkan null untuk sale_end_date
-        ];
-
-        // Jika Sale Label adalah 'Sale', proses tanggalnya
-        if ($this->input->post('sale_label') === 'Sale') {
-            // Ambil tanggal sale_end_date
-            $sale_end_date = $this->input->post('sale_end_date');
-            if ($sale_end_date) {
-                // Pastikan tanggal valid, konversi ke format Y-m-d H:i:s
-                $sale_end_date = date('Y-m-d H:i:s', strtotime($sale_end_date));
-                $product_data['sale_end_date'] = $sale_end_date;
-            } else {
-                // Jika tidak ada tanggal yang diberikan, set sebagai null
-                $product_data['sale_end_date'] = null;
+            // Jika validasi gagal
+            if ($this->form_validation->run() == FALSE) {
+                echo validation_errors();
+                die();
             }
-        }
 
-        // Insert data produk dan ambil product_id yang baru
-        $this->Admin_model->create_product($product_data);
-        $product_id = $this->db->insert_id(); // Mendapatkan ID produk yang baru
-
-        // Jika produk berhasil disimpan
-        if ($product_id) {
-            // Data untuk varian produk
-            $variant_data = [
-                'product_id' => $product_id,  // Gunakan product_id yang baru saja dibuat
-                'variant_name' => $this->input->post('variant_name'),
-                'image' => $this->input->post('variant_img'), // Nama file gambar
+            // Data produk yang akan disimpan
+            $product_data = [
+                'name' => $this->input->post('name'),
+                'description' => $this->input->post('description'),
+                'price' => $this->input->post('price'),
+                'stock_quantity' => $this->input->post('stock_quantity'),
+                'status_id' => $this->input->post('status_id'),
+                'sale_label' => $this->input->post('sale_label'),
+                'image' => $this->input->post('image'),
+                'hover_image' => $this->input->post('hover_image'),
+                'created_at' => date('Y-m-d H:i:s'),
+                'discount_percentage' => $this->input->post('discount_percentage') ?: null,
+                'sale_end_date' => null,  // Defaultkan null untuk sale_end_date
             ];
 
-            // Insert varian produk ke database
-            if ($this->Admin_model->create_product_variant($variant_data)) {
-                $this->session->set_flashdata('success', 'Product and variants created successfully.');
-            } else {
-                $this->session->set_flashdata('error', 'Failed to create product variants.');
+            // Jika Sale Label adalah 'Sale', proses tanggalnya
+            if ($this->input->post('sale_label') === 'Sale') {
+                // Ambil tanggal sale_end_date
+                $sale_end_date = $this->input->post('sale_end_date');
+                if ($sale_end_date) {
+                    // Pastikan tanggal valid, konversi ke format Y-m-d H:i:s
+                    $sale_end_date = date('Y-m-d H:i:s', strtotime($sale_end_date));
+                    $product_data['sale_end_date'] = $sale_end_date;
+                } else {
+                    // Jika tidak ada tanggal yang diberikan, set sebagai null
+                    $product_data['sale_end_date'] = null;
+                }
             }
-        } else {
-            $this->session->set_flashdata('error', 'Failed to create product.');
+
+            // Insert data produk dan ambil product_id yang baru
+            $this->Admin_model->create_product($product_data);
+            $product_id = $this->db->insert_id(); // Mendapatkan ID produk yang baru
+
+            // Jika produk berhasil disimpan
+            if ($product_id) {
+                // Mendapatkan data varian produk (array)
+                $variant_names = $this->input->post('variant_name'); // Array of variant names
+                $variant_images = $this->input->post('variant_img'); // Array of variant images
+
+                // Loop untuk memasukkan setiap varian secara terpisah
+                if (!empty($variant_names) && count($variant_names) == count($variant_images)) {
+                    foreach ($variant_names as $index => $variant_name) {
+                        $variant_data = [
+                            'product_id' => $product_id,  // Gunakan product_id yang baru saja dibuat
+                            'variant_name' => $variant_name,
+                            'image' => isset($variant_images[$index]) ? $variant_images[$index] : '',
+                        ];
+
+                        // Insert varian produk ke database
+                        $this->Admin_model->create_product_variant($variant_data);
+                    }
+
+                    // Set flash message sukses
+                    $this->session->set_flashdata('success', 'Product and variants created successfully.');
+                } else {
+                    // Jika jumlah varian name dan image tidak cocok
+                    $this->session->set_flashdata('error', 'Variant names and images do not match.');
+                }
+            } else {
+                $this->session->set_flashdata('error', 'Failed to create product.');
+            }
+
+            // Redirect ke halaman produk
+            redirect('admin/product');
         }
 
-        // Redirect ke halaman produk
-        redirect('admin/product');
+        // Ambil data status produk untuk dropdown
+        $data['statuses'] = $this->Admin_model->get_product_statuses();
+        $this->load->view('admin/header');
+        $this->load->view('admin/create_product', $data);
     }
-
-    // Ambil data status produk untuk dropdown
-    $data['statuses'] = $this->Admin_model->get_product_statuses();
-    $this->load->view('admin/header');
-    $this->load->view('admin/create_product', $data);
-}
-
-
-
-
-
-
-
 
     public function valid_date($date)
     {

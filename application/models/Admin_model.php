@@ -84,9 +84,19 @@ class Admin_model extends CI_Model
         // Pastikan menggunakan nama tabel yang benar
         return $this->db->insert('product_variants', $variant_data);
     }
+
+    public function get_product_variants($product_id)
+    {
+        // Query to fetch all variants related to a product
+        $this->db->select('*');
+        $this->db->from('product_variants');
+        $this->db->where('product_id', $product_id);  // Filtering by product_id
+        $query = $this->db->get();
+        
+        // Return the result as an array of variants
+        return $query->result();
+    }
     
-
-
 
     // Ambil ulasan produk
     public function get_product_reviews($product_id)
