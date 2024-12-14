@@ -126,7 +126,7 @@
                         <div class="collection-item sp-col">
                             <a href="shop-left-sidebar.html" class="zoom-scal">
                                 <div class="img">
-                                    <img class="blur-up lazyload" data-src="assets/images/collection/demo1-ct-img1.jpg" src="assets/images/collection/demo1-ct-img1.jpg" alt="Women Wear" title="Women Wear" width="645" height="723" />
+                                    <img class="blur-up lazyload" data-src="assets/images/collection/demo1-ct-img1.jpg" src="assets/images/collection/demo1-ct-img1.jpg" alt="Women Wear" title="Women Wear" width="645" height="650" />
                                 </div>
                                 <div class="details middle-right">
                                     <div class="inner">
@@ -142,9 +142,9 @@
                         <div class="collection-item sp-col">
                             <a href="shop-left-sidebar.html" class="zoom-scal">
                                 <div class="img">
-                                    <img class="blur-up lazyload" data-src="assets/images/collection/demo1-ct-img2.jpg" src="assets/images/collection/demo1-ct-img2.jpg" alt="Mens Wear" title="Mens Wear" width="645" height="344" />
+                                    <img class="blur-up lazyload" data-src="assets/images/slideshow/demo2-banner1.jpg" src="assets/images/slideshow/demo2-banner1.jpg" alt="Mens Wear" title="Mens Wear" width="645" height="344" />
                                 </div>
-                                <div class="details middle-left">
+                                <div class="details middle-right">
                                     <div class="inner">
                                         <h3 class="title mb-2">Mens Wear</h3>
                                         <p class="mb-3">Tailor-made with passion</p>
@@ -156,7 +156,7 @@
                         <div class="collection-item sp-col">
                             <a href="shop-left-sidebar.html" class="zoom-scal">
                                 <div class="img">
-                                    <img class="blur-up lazyload" data-src="assets/images/collection/demo1-ct-img3.jpg" src="assets/images/collection/demo1-ct-img3.jpg" alt="Kids Wear" title="Kids Wear" width="645" height="349" />
+                                    <img class="blur-up lazyload" data-src="assets/images/slideshow/demo10-banner3.jpg" src="assets/images/slideshow/demo10-banner3.jpg" alt="Kids Wear" title="Kids Wear" width="645" height="500" />
                                 </div>
                                 <div class="details middle-right">
                                     <div class="inner">
@@ -187,26 +187,8 @@
                     <a href="shop-left-sidebar.html" class="category-link clr-none">
                         <div class="zoom-scal zoom-scal-nopb rounded-3"><img class="blur-up lazyload" data-src="assets/images/collection/sub-collection1.jpg" src="assets/images/collection/sub-collection1.jpg" alt="Men's Jakets" title="Men's Jakets" width="365" height="365" /></div>
                         <div class="details mt-3 text-center">
-                            <h4 class="category-title mb-0">Men's Jakets</h4>
+                            <h4 class="category-title mb-0">Fashion</h4>
                             <p class="counts">20 Products</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="category-item zoomscal-hov">
-                    <a href="shop-left-sidebar.html" class="category-link clr-none">
-                        <div class="zoom-scal zoom-scal-nopb rounded-3"><img class="blur-up lazyload" data-src="assets/images/collection/sub-collection3.jpg" src="assets/images/collection/sub-collection3.jpg" alt="Tops" title="Tops" width="365" height="365" /></div>
-                        <div class="details mt-3 text-center">
-                            <h4 class="category-title mb-0">Tops</h4>
-                            <p class="counts">13 Products</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="category-item zoomscal-hov">
-                    <a href="shop-left-sidebar.html" class="category-link clr-none">
-                        <div class="zoom-scal zoom-scal-nopb rounded-3"><img class="blur-up lazyload" data-src="assets/images/collection/sub-collection5.jpg" src="assets/images/collection/sub-collection5.jpg" alt="T-Shirts" title="T-Shirts" width="365" height="365" /></div>
-                        <div class="details mt-3 text-center">
-                            <h4 class="category-title mb-0">T-Shirts</h4>
-                            <p class="counts">18 Products</p>
                         </div>
                     </a>
                 </div>
@@ -221,28 +203,28 @@
                 </div>
                 <div class="category-item zoomscal-hov">
                     <a href="shop-left-sidebar.html" class="category-link clr-none">
-                        <div class="zoom-scal zoom-scal-nopb rounded-3"><img class="blur-up lazyload" data-src="assets/images/collection/sub-collection9.jpg" src="assets/images/collection/sub-collection9.jpg" alt="Shorts" title="Shorts" width="365" height="365" /></div>
+                        <div class="zoom-scal zoom-scal-nopb rounded-3"><img class="blur-up lazyload" data-src="assets/images/collection/demo3-ct-img1.jpg" src="assets/images/collection/demo3-ct-img1.jpg" alt="T-Shirts" title="T-Shirts" width="365" height="365" /></div>
                         <div class="details mt-3 text-center">
-                            <h4 class="category-title mb-0">Shorts</h4>
+                            <h4 class="category-title mb-0">Bags</h4>
+                            <p class="counts">18 Products</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="category-item zoomscal-hov">
+                    <a href="shop-left-sidebar.html" class="category-link clr-none">
+                        <div class="zoom-scal zoom-scal-nopb rounded-3"><img class="blur-up lazyload" data-src="assets/images/collection/jewel.jpg" src="assets/images/collection/jewel.jpg" alt="Shoes" title="Shoes" width="365" height="365" /></div>
+                        <div class="details mt-3 text-center">
+                            <h4 class="category-title mb-0">Jewelry</h4>
+                            <p class="counts">11 Products</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="category-item zoomscal-hov">
+                    <a href="shop-left-sidebar.html" class="category-link clr-none">
+                        <div class="zoom-scal zoom-scal-nopb rounded-3"><img class="blur-up lazyload" data-src="assets/images/collection/demo8-collection2.jpg" src="assets/images/collection/demo8-collection2.jpg" alt="Shorts" title="Shorts" width="365" height="365" /></div>
+                        <div class="details mt-3 text-center">
+                            <h4 class="category-title mb-0">Makeup</h4>
                             <p class="counts">28 Products</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="category-item zoomscal-hov">
-                    <a href="shop-left-sidebar.html" class="category-link clr-none">
-                        <div class="zoom-scal zoom-scal-nopb rounded-3"><img class="blur-up lazyload" data-src="assets/images/collection/sub-collection2.jpg" src="assets/images/collection/sub-collection2.jpg" alt="Sunglasses" title="Sunglasses" width="365" height="365" /></div>
-                        <div class="details mt-3 text-center">
-                            <h4 class="category-title mb-0">Sunglasses</h4>
-                            <p class="counts">24 Products</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="category-item zoomscal-hov">
-                    <a href="shop-left-sidebar.html" class="category-link clr-none">
-                        <div class="zoom-scal zoom-scal-nopb rounded-3"><img class="blur-up lazyload" data-src="assets/images/collection/sub-collection4.jpg" src="assets/images/collection/sub-collection4.jpg" alt="Girls Top" title="Girls Top" width="365" height="365" /></div>
-                        <div class="details mt-3 text-center">
-                            <h4 class="category-title mb-0">Girls Top</h4>
-                            <p class="counts">26 Products</p>
                         </div>
                     </a>
                 </div>

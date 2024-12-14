@@ -1,6 +1,6 @@
 <?php 
 
-class Pages extends CI_Controller {
+class Wishlist extends CI_Controller {
     
     public function __construct() {
         parent::__construct();
@@ -13,7 +13,7 @@ class Pages extends CI_Controller {
 
         // Memuat view dengan data menu
         $this->load->view('templates/header', $data);
-        $this->load->view('pages/index');
+        $this->load->view('wishlist/index');
         $this->load->view('templates/footer');
     }
 

@@ -134,7 +134,7 @@
                         <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Admin</li>
                         <li class="breadcrumb-item text-sm text-dark active" aria-current="page">User</li>
                     </ol>
-                    <h6 class="font-weight-bolder mb-0">Dashboard</h6>
+                    <h6 class="font-weight-bolder mb-0"></h6>
                 </nav>
 
                 <!-- Navbar Controls -->

@@ -1,6 +1,6 @@
 <?php 
 
-class Electronic extends CI_Controller {
+class Collection extends CI_Controller {
     
     public function __construct() {
         parent::__construct();
@@ -13,7 +13,7 @@ class Electronic extends CI_Controller {
 
         // Memuat view dengan data menu
         $this->load->view('templates/header', $data);
-        $this->load->view('home/electronic');
+        $this->load->view('collection/index');
         $this->load->view('templates/footer');
     }
 
